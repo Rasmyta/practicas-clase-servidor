@@ -80,8 +80,7 @@ try {
     
     $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', 0);
     $html2pdf->writeHTML($content);
-    //$html2pdf->output('factura.pdf');
-    echo "No va";
+    $html2pdf->output('factura.pdf');
 } catch (Html2PdfException $e) {
     $html2pdf->clean();
 
