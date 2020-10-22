@@ -54,7 +54,7 @@ try {
     //Tabla
     $content .= '
     <page backcolor="#FFFFFA" backleft="5mm" backright="5mm" backtop="10mm" backbottom="10mm" >
-    <img src="img/logo.png" width="700" alt="logo">
+    <img src="img/logo.jpg" width="700" alt="logo">
     <h1>Empresa MiKea</h1>
     <h4>Factura xxxxxxxxx</h4>
     <table cellspacing="4">
