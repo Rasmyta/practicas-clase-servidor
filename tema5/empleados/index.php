@@ -22,6 +22,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
+						<th></th>
                         <th>DNI</th>
                         <th>NOMBRE</th>
 						<th>APELLIDOS</th>
@@ -37,7 +38,7 @@
 		//Mostramos los empleados desde la BD
 		$conexion = conectar("2daw");
 
-		$empleados = hacerSelect($conexion,"SELECT * FROM empleados ORDER BY apellidos");
+		$empleados = hacerSelect($conexion);
 
 		//Recorremos los resultados
 		foreach($empleados as $empleado){
@@ -45,7 +46,7 @@
 		            <tr>
 						<td>
 							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="1">
+								<input type="checkbox" id="checkbox1" name="options[]" value="<?php echo $empleado['id'];?>">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
@@ -58,12 +59,17 @@
 						<td><?php echo $empleado['cargo']; ?></td>
 						<td><?php echo $empleado['estado']; ?></td>
                         <td>
-                            <a href="#editEmpleadoModal<?php echo $empleado['id']; ?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+							<!--
+							<a href="#editEmpleadoModal<?php echo $empleado['id']; ?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+							-->
 							<a href="controlador.php?delete=<?php echo $empleado['id'];?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
+						</td>
                     </tr>
 <?php
 		}
+
+		//Cerrar conexión
+		$conexion = null;
 ?>
                 </tbody>
 			</table>
@@ -72,7 +78,7 @@
         </div>
 	</div>
 	
-	<!-- Add Modal HTML -->
+	<!-- Add Empleado Modal HTML -->
 	<div id="addEmpleadoModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -83,29 +89,41 @@
 					</div>
 					<div class="modal-body">					
 						<div class="form-group">
-							<label>Título</label>
-							<input type="text" name="titulo" class="form-control" required>
+							<label> DNI</label>
+							<input type="text" name="dni" class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>Género</label>
-							<input type="text" name="genero" class="form-control" required>
+							<label>Nombre</label>
+							<input type="text" name="nombre" class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>Director</label>
-							<input type="text" name="director" class="form-control" required>
+							<label>Apellidos</label>
+							<input type="text" name="apellidos" class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>Año</label>
-							<input type="text" name="fecha" class="form-control" required>
+							<label>Email</label>
+							<input type="email" name="email" class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>Sinopsis</label>
-							<textarea class="form-control" name="sinopsis" required></textarea>
+							<label>Teléfono</label>
+							<input type="tel" name="telefono" class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>Cartel</label>
-							<input type="text" name="cartel" class="form-control" required>
-						</div>				
+							<label>Fecha Nacimiento</label>
+							<input type="date" name="fechanac" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Cargo</label>
+							<input type="text" name="cargo" class="form-control" required>
+						</div>	
+						<div class="form-group">
+							<label>Estado</label>
+							<select name="estado" class="form-control">
+								<option value="activo">Activo</option>
+								<option value="erte">En Erte</option>
+								<option value="ex">Exempleado</option>
+							</select>
+						</div>			
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
