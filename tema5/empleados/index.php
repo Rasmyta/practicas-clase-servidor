@@ -18,7 +18,7 @@
 					</div>
 				</div>
 				<div class="row float-right">
-					<form action='index.php' method='post'>
+					<form action='index.php' method='get'>
 						<div class='row form-group mb-2 pr-2'>
 							<label class="col-sm-2"> Filtro: </label>
 							<input class="col-sm-6"type="text" name="filtro" class="form-control">
@@ -48,8 +48,8 @@
 <?php
 		//Comprobar si hemos pulsado el filtro de búsqueda
 		$filtro = "";
-		if (isset($_POST['filtro'])) {
-			$filtro = filtrado($_POST['filtro']);
+		if (isset($_GET['filtro'])) {
+			$filtro = filtrado($_GET['filtro']);
 		} 
 
 		//Paginador
@@ -96,11 +96,11 @@
 						<td colspan='10'>
 <?php
 		//Calculamos el número total de páginas consultando BD
-		$np = numPaginas();
+		$np = numPaginas($filtro);
 
 ?>							
-							<a href="index.php?pagina=<?php if ($pagina > 1) echo ($pagina-1); else echo 1; ?>">Anterior</a>
-							<a href="index.php?pagina=<?php if ($pagina < $np) echo ($pagina+1); else echo $np; ?>">&nbsp;Siguiente</a>
+							<a href="index.php?filtro=<?php echo $filtro; ?>&pagina=<?php if ($pagina > 1) echo ($pagina-1); else echo 1; ?>">Anterior</a>
+							<a href="index.php?filtro=<?php echo $filtro; ?>&pagina=<?php if ($pagina < $np) echo ($pagina+1); else echo $np; ?>">&nbsp;Siguiente</a>
 						</td>
 					</tr>
 					

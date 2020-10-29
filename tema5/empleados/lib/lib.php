@@ -29,12 +29,19 @@
 
     //Obtener el número de páginas de empleados
     define("RESPP",3);
-    function numPaginas() {
-        $count_query = "SELECT * FROM empleados";
+    function numPaginas($filtro) {
+        $consulta = "SELECT * FROM empleados";
+        if (!empty($filtro)) {                
+            $consulta .= " WHERE dni = :filtro ";
+            $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
+            $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
+        }
         $conexion = conectar("2daw");
-        $stmt = $conexion->prepare($count_query);
+        $stmt = $conexion->prepare($consulta);
+        $stmt->bindParam(":filtro",$filtro);
         $stmt->execute();
         $count = $stmt->rowCount();
+        $conexion = null;
 
         return ceil($count / RESPP);
     }
