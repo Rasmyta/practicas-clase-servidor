@@ -42,7 +42,7 @@
         //Si todo ha ido bien, redirigimos a index.php
         header("Location: index.php");  
     }
-/*
+
     //Acción de BORRAR VARIOS empleados
     if (isset($_GET['deleteSome'])) {
         $ids = explode("-",$_GET['deleteSome']);
@@ -51,7 +51,7 @@
         //Si todo ha ido bien, redirigimos a index.php
         header("Location: index.php");         
     }
-*/
+
     //Acción de RECUPERAR empleado para MODIFICARLO
     if (isset($_GET['update'])) {
         //Recibimos todos los datos del empleado y filtramos la entrada

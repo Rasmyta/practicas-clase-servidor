@@ -28,16 +28,25 @@
     }
 
     //Hacer consulta
-    function hacerSelect() {
+    function hacerSelect($filtro) {
         try {
             //Establecer conexión
             $conexion = conectar("2daw");
-            //Consulta de todos los empleados
-            $consulta = "SELECT * FROM empleados ORDER BY apellidos";
             //Para evitar problemas con caracteres especiales
-            $conexion->query("SET NAMES utf8");
+            $conexion->query("SET NAMES utf8");            
+            //Consulta de todos los empleados
+            $consulta = "SELECT * FROM empleados ";
+            if (!empty($filtro)) {                
+                $consulta .= " WHERE dni = :filtro ";
+                $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
+                $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
+            }
+            //Añadimos la búsqueda a la consulta
+            $consulta .= " ORDER BY apellidos";
+
             //Preparamos la consulta
             $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":filtro",$filtro);
             //Ejecutamos la consulta
             $stmt->execute();
             //Devolvemos los resultados
@@ -121,6 +130,29 @@
 
     }
 
+    //Borrar varios empleados
+    function borrarVariosEmpleados($ids) {
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Preparamos la consulta
+            $consulta = "DELETE FROM empleados WHERE id IN (";
+            foreach ($ids as $id) {
+                $consulta .= $id.",";
+            }
+            $consulta = substr($consulta,0,strlen($consulta)-2);
+            $consulta .= ")";
+
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(':id',$id);
+
+            $stmt->execute();
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+
+    }
 
     //Modificar un empleado existente
     function modificarEmpleado($id,$dni,$nombre,$apellidos,$email,$telefono,$fechanac,$cargo,$estado) {
@@ -150,6 +182,8 @@
         } catch (PDOException $e){
             file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
         }
-    }    
+    }  
+    
+
 
 ?>

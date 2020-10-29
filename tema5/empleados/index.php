@@ -16,7 +16,17 @@
 						<a href="#addEmpleadoModal" class="btn btn-success" data-toggle="modal"><span>Añadir Empleado</span></a>
 						<a href="#deleteEmpleadoModal" class="btn btn-danger" data-toggle="modal"> <span>Eliminar</span></a>	
 					</div>
-                </div>
+				</div>
+				<div class="row float-right">
+					<form action='index.php' method='post'>
+						<div class='row form-group mb-2 pr-2'>
+							<label class="col-sm-2"> Filtro: </label>
+							<input class="col-sm-6"type="text" name="filtro" class="form-control">
+							<input class="col-sm-3 ml-2 btn btn-primary" type='submit' name='buscar' value='Buscar'>
+						</div>						
+
+					</form>
+				</div>
 			</div>
 
             <table class="table table-striped table-hover">
@@ -36,8 +46,14 @@
                 </thead>
                 <tbody>
 <?php
+		//Comprobar si hemos pulsado el filtro de búsqueda
+		$filtro = "";
+		if (isset($_POST['filtro'])) {
+			$filtro = filtrado($_POST['filtro']);
+		} 
+
 		//Mostramos los empleados desde la BD
-		$empleados = hacerSelect();
+		$empleados = hacerSelect($filtro);
 
 		//Recorremos los resultados
 		foreach($empleados as $empleado){
@@ -251,7 +267,7 @@
 		}
 		
 
-/*
+
 		//Para borrar múltiples registros
 		function deleteSome() {
 			var checkboxes = document.getElementsByName('empleados');
@@ -263,7 +279,7 @@
 			}
 			window.location.assign(url);
 		}
-*/
+
 	</script>
 
 </body>
