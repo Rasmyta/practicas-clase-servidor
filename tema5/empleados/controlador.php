@@ -7,14 +7,6 @@
     //Funciones de acceso a BD
     include_once("lib/lib.php");
 
-    //Función para filtrar los valores recibidos de un formulario
-    function filtrado($datos){
-        $datos = trim($datos);                                  // Elimina espacios antes y después de los datos
-        $datos = stripslashes($datos);                          // Elimina backslashes \
-        $datos = filter_var($datos,FILTER_SANITIZE_STRING);     // Elimina todas las etiquetas    
-        return $datos;
-    }
-
 
     /*
      * CONTROLADOR
@@ -33,9 +25,7 @@
         $estado = filtrado($_POST['estado']);
         
         //Conectar a BD y hacer insert
-        $conexion = conectar("2daw");
-        insertarEmpleado($conexion,$dni,$nombre,$apellidos,$email,$telefono,$fechanac,$cargo,$estado);
-        $conexion = null;
+        insertarEmpleado($dni,$nombre,$apellidos,$email,$telefono,$fechanac,$cargo,$estado);
 
         //Si todo ha ido bien, redirigimos a index.php
         header("Location: index.php");
@@ -47,14 +37,32 @@
         $id = filtrado($_GET['delete']);
 
         //Conectar a BD y hacer delete
-        $conexion = conectar("2daw");
-        borrarEmpleado($conexion,$id);
-        $conexion = null;
+        borrarEmpleado($id);
 
         //Si todo ha ido bien, redirigimos a index.php
         header("Location: index.php");  
     }
+/*
+    //Acción de BORRAR VARIOS empleados
+    if (isset($_GET['deleteSome'])) {
+        $ids = explode("-",$_GET['deleteSome']);
+        borrarVariosEmpleados($ids);
 
+        //Si todo ha ido bien, redirigimos a index.php
+        header("Location: index.php");         
+    }
+*/
+    //Acción de RECUPERAR empleado para MODIFICARLO
+    if (isset($_GET['update'])) {
+        //Recibimos todos los datos del empleado y filtramos la entrada
+        $id = filtrado($_GET['update']);
+
+        //Recuperar los datos de ese empleado para mostrarlos después
+        $empleado = hacerSelectId($id);
+
+        //Si todo ha ido bien, redirigimos a index.php
+        header("Location: index.php?accion=update&dni=".$empleado['dni']);  
+    }
 
 
 ?>

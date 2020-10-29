@@ -31,14 +31,13 @@
                         <th>FECHA NAC.</th>
                         <th>CARGO</th>
 						<th>ESTADO</th>
+						<th></th>
                     </tr>
                 </thead>
                 <tbody>
 <?php
 		//Mostramos los empleados desde la BD
-		$conexion = conectar("2daw");
-
-		$empleados = hacerSelect($conexion);
+		$empleados = hacerSelect();
 
 		//Recorremos los resultados
 		foreach($empleados as $empleado){
@@ -46,7 +45,7 @@
 		            <tr>
 						<td>
 							<span class="custom-checkbox">
-								<input type="checkbox" id="checkbox1" name="options[]" value="<?php echo $empleado['id'];?>">
+								<input type="checkbox" id="checkbox1" name="empleados" value="<?php echo $empleado['id'];?>">
 								<label for="checkbox1"></label>
 							</span>
 						</td>
@@ -59,17 +58,14 @@
 						<td><?php echo $empleado['cargo']; ?></td>
 						<td><?php echo $empleado['estado']; ?></td>
                         <td>
-							<!--
-							<a href="#editEmpleadoModal<?php echo $empleado['id']; ?>" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							-->
+							
+							<a href="controlador.php?update=<?php echo $empleado['id']; ?>"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 							<a href="controlador.php?delete=<?php echo $empleado['id'];?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
                     </tr>
 <?php
 		}
 
-		//Cerrar conexión
-		$conexion = null;
 ?>
                 </tbody>
 			</table>
@@ -139,22 +135,99 @@
 	<div id="deleteEmpleadoModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form>
 					<div class="modal-header">						
 						<h4 class="modal-title">Borrar Empleado</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">					
 						<p>¿Estás seguro que quieres borrar este registro?</p>
-						<p class="text-warning"><small>Esta acción no pudo ser realizada.</small></p>
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-danger" value="Delete">
+						<input type="button" class="btn btn-danger" onclick="deleteSome()" value="Delete">
+					</div>
+			</div>
+		</div>
+	</div>
+
+		<!-- Update Empleado Modal HTML -->
+		<div id="updateEmpleadoModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form method='POST' action='controlador.php'>
+					<div class="modal-header">						
+						<h4 class="modal-title">Modificar Empleado</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<div class="form-group">
+							<label> DNI</label>
+							<input type="text" name="dni" class="form-control"  
+								   value="<?php if (isset($_GET['dni'])) echo filtrado($_GET['dni']);  ?>" required>
+						</div>
+						<div class="form-group">
+							<label>Nombre</label>
+							<input type="text" name="nombre" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Apellidos</label>
+							<input type="text" name="apellidos" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="email" name="email" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Teléfono</label>
+							<input type="tel" name="telefono" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Fecha Nacimiento</label>
+							<input type="date" name="fechanac" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Cargo</label>
+							<input type="text" name="cargo" class="form-control" required>
+						</div>	
+						<div class="form-group">
+							<label>Estado</label>
+							<select name="estado" class="form-control">
+								<option value="activo">Activo</option>
+								<option value="erte">En Erte</option>
+								<option value="ex">Exempleado</option>
+							</select>
+						</div>			
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+						<input type="submit" name='update' class="btn btn-success" value="Add">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<script>
+		//Abrimos el modal del update si la url lleva accion=update
+		var accion = window.location.search.indexOf("accion=update");
+		if (accion == 1) {
+			$("#updateEmpleadoModal").modal("show");
+		}
+
+/*
+		//Para borrar múltiples registros
+		function deleteSome() {
+			var checkboxes = document.getElementsByName('empleados');
+			var url="controlador.php?deleteSome=";
+			for (var checkbox of checkboxes) {
+				if (checkbox.checked) {
+					url += checkbox.value + "-";
+				}
+			}
+			window.location.assign(url);
+		}
+*/
+	</script>
+
 </body>
 </html>                                		                            
