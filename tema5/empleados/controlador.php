@@ -61,7 +61,35 @@
         $empleado = hacerSelectId($id);
 
         //Si todo ha ido bien, redirigimos a index.php
-        header("Location: index.php?accion=update&dni=".$empleado['dni']);  
+        $url = "Location: index.php?accion=update&dni=".$empleado['dni'];
+        $url .= "&nombre=".$empleado['nombre'];
+        $url .= "&apellidos=".$empleado['apellidos'];
+        $url .= "&email=".$empleado['email'];
+        $url .= "&telefono=".$empleado['telefono'];
+        $url .= "&fechanac=".$empleado['fechanac'];
+        $url .= "&cargo=".$empleado['cargo'];
+        $url .= "&estado=".$empleado['estado'];
+        $url .= "&id=".$empleado['id']; //Para pasar al modal el identificador de empleado
+        header($url);  
+    }
+
+    //Acción de MODIFICAR el empleado
+    if (isset($_POST['update'])) {
+        //Recibimos todos los datos del empleado y filtramos la entrada
+        $dni = filtrado($_POST['dni']);
+        $nombre = filtrado($_POST['nombre']);
+        $apellidos = filtrado($_POST['apellidos']);
+        $email = filtrado($_POST['email']);
+        $telefono = filtrado($_POST['telefono']);
+        $fechanac = $_POST['fechanac'];
+        $cargo = filtrado($_POST['cargo']);
+        $estado = filtrado($_POST['estado']);
+        $id = filtrado($_POST['id']);
+
+        modificarEmpleado($id,$dni,$nombre,$apellidos,$email,$telefono,$fechanac,$cargo,$estado);
+
+        header("Location: index.php");
+
     }
 
 

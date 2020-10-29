@@ -159,7 +159,8 @@
 						<h4 class="modal-title">Modificar Empleado</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
-					<div class="modal-body">					
+					<div class="modal-body">
+						<input type="hidden" name="id" value="<?php if (isset($_GET['id'])) echo filtrado($_GET['id']);  ?>">					
 						<div class="form-group">
 							<label> DNI</label>
 							<input type="text" name="dni" class="form-control"  
@@ -167,40 +168,74 @@
 						</div>
 						<div class="form-group">
 							<label>Nombre</label>
-							<input type="text" name="nombre" class="form-control" required>
+							<input type="text" name="nombre" class="form-control" 
+								   value="<?php if (isset($_GET['nombre'])) echo filtrado($_GET['nombre']);  ?>"  required>
 						</div>
 						<div class="form-group">
 							<label>Apellidos</label>
-							<input type="text" name="apellidos" class="form-control" required>
+							<input type="text" name="apellidos" class="form-control" 
+							       value="<?php if (isset($_GET['apellidos'])) echo filtrado($_GET['apellidos']);  ?>"  required>
 						</div>
 						<div class="form-group">
 							<label>Email</label>
-							<input type="email" name="email" class="form-control" required>
+							<input type="email" name="email" class="form-control" 
+							       value="<?php if (isset($_GET['email'])) echo filtrado($_GET['email']);  ?>"  required>
 						</div>
 						<div class="form-group">
 							<label>Teléfono</label>
-							<input type="tel" name="telefono" class="form-control" required>
+							<input type="tel" name="telefono" class="form-control" 
+							value="<?php if (isset($_GET['telefono'])) echo filtrado($_GET['telefono']);  ?>"  required>
 						</div>
 						<div class="form-group">
 							<label>Fecha Nacimiento</label>
-							<input type="date" name="fechanac" class="form-control" required>
+							<input type="date" name="fechanac" class="form-control" 
+								   value="<?php if (isset($_GET['fechanac'])) echo filtrado($_GET['fechanac']);  ?>"  required>
 						</div>
 						<div class="form-group">
 							<label>Cargo</label>
-							<input type="text" name="cargo" class="form-control" required>
+							<input type="text" name="cargo" class="form-control" 
+							       value="<?php if (isset($_GET['cargo'])) echo filtrado($_GET['cargo']);  ?>"  required>
 						</div>	
 						<div class="form-group">
 							<label>Estado</label>
 							<select name="estado" class="form-control">
-								<option value="activo">Activo</option>
-								<option value="erte">En Erte</option>
-								<option value="ex">Exempleado</option>
+								<?php
+								$estado = "";
+								if (isset($_GET['estado'])) 
+									$estado = filtrado($_GET['estado']);
+							
+								switch ($estado) {
+									case "erte": 
+										echo "<option value='activo'>Activo</option>";
+										echo "<option value='erte' selected>En Erte</option>";
+										echo "<option value='ex'>Exempleado</option>";
+										break;
+									case "activo": 
+										echo "<option value='activo' selected>Activo</option>";
+										echo "<option value='erte'>En Erte</option>";
+										echo "<option value='ex'>Exempleado</option>";
+										break;
+									case "ex": 
+										echo "<option value='activo'>Activo</option>";
+										echo "<option value='erte'>En Erte</option>";
+										echo "<option value='ex' selected>Exempleado</option>";
+										break;
+									default:
+										echo "<option value='activo'>Activo</option>";
+										echo "<option value='erte'>En Erte</option>";
+										echo "<option value='ex'>Exempleado</option>";
+										break;																												
+								}
+
+
+								?>
+								
 							</select>
 						</div>			
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-						<input type="submit" name='update' class="btn btn-success" value="Add">
+						<input type="submit" name='update' class="btn btn-success" value="Update">
 					</div>
 				</form>
 			</div>
@@ -208,11 +243,13 @@
 	</div>
 
 	<script>
+		
 		//Abrimos el modal del update si la url lleva accion=update
 		var accion = window.location.search.indexOf("accion=update");
 		if (accion == 1) {
 			$("#updateEmpleadoModal").modal("show");
 		}
+		
 
 /*
 		//Para borrar múltiples registros

@@ -55,10 +55,10 @@
         try {
             //Establecer conexión
             $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");            
             //Consulta sólo del empleado por id
             $consulta = "SELECT * FROM empleados WHERE id = :id";
-            //Para evitar problemas con caracteres especiales
-            $conexion->query("SET NAMES utf8");
             //Preparamos la consulta
             $stmt = $conexion->prepare($consulta);
             $stmt->bindParam(":id", $id);
@@ -70,7 +70,7 @@
         } catch (PDOException $e){
             file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
         }
-        
+
         return $empleado;
     }
 
@@ -120,5 +120,36 @@
         }
 
     }
+
+
+    //Modificar un empleado existente
+    function modificarEmpleado($id,$dni,$nombre,$apellidos,$email,$telefono,$fechanac,$cargo,$estado) {
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");
+            //Preparamos la consulta
+            $consulta = "UPDATE empleados SET dni=:dni,nombre=:nombre,apellidos=:apellidos,email=:email";
+            $consulta .= ",telefono=:telefono,fechanac=:fechanac,cargo=:cargo,estado=:estado ";
+            $consulta .= "WHERE id=:id";
+            $stmt = $conexion->prepare($consulta);
+
+            $stmt->bindParam(':dni', $dni);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':apellidos', $apellidos);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':telefono', $telefono);
+            $stmt->bindParam(':fechanac', $fechanac);
+            $stmt->bindParam(':cargo', $cargo);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->bindParam(':id', $id);
+
+            $stmt->execute();
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+    }    
 
 ?>
