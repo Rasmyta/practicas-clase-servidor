@@ -27,8 +27,22 @@
 		}   
     }
 
+    //Obtener el número de páginas de empleados
+    define("RESPP",3);
+    function numPaginas() {
+        $count_query = "SELECT * FROM empleados";
+        $conexion = conectar("2daw");
+        $stmt = $conexion->prepare($count_query);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+
+        return ceil($count / RESPP);
+    }
+
     //Hacer consulta
-    function hacerSelect($filtro) {
+    function hacerSelect($filtro,$pagina) {
+        //Resultados por página a mostrar
+
         try {
             //Establecer conexión
             $conexion = conectar("2daw");
@@ -43,6 +57,11 @@
             }
             //Añadimos la búsqueda a la consulta
             $consulta .= " ORDER BY apellidos";
+            //Paginador
+            if ($pagina > 0) {
+                $start = (($pagina-1) * RESPP);
+                $consulta .= " LIMIT ".$start." , ".RESPP;
+            }
 
             //Preparamos la consulta
             $stmt = $conexion->prepare($consulta);

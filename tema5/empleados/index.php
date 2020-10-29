@@ -52,8 +52,15 @@
 			$filtro = filtrado($_POST['filtro']);
 		} 
 
+		//Paginador
+		if (isset($_GET['pagina'])) {
+			$pagina = $_GET['pagina'];
+		} else {
+			$pagina = 1;
+		}
+
 		//Mostramos los empleados desde la BD
-		$empleados = hacerSelect($filtro);
+		$empleados = hacerSelect($filtro,$pagina);
 
 		//Recorremos los resultados
 		foreach($empleados as $empleado){
@@ -83,7 +90,21 @@
 		}
 
 ?>
-                </tbody>
+				</tbody>
+				<tfooter>
+					<tr>
+						<td colspan='10'>
+<?php
+		//Calculamos el número total de páginas consultando BD
+		$np = numPaginas();
+
+?>							
+							<a href="index.php?pagina=<?php if ($pagina > 1) echo ($pagina-1); else echo 1; ?>">Anterior</a>
+							<a href="index.php?pagina=<?php if ($pagina < $np) echo ($pagina+1); else echo $np; ?>">&nbsp;Siguiente</a>
+						</td>
+					</tr>
+					
+				</tfooter>
 			</table>
 
 			
