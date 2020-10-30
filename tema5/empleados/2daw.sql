@@ -1,81 +1,50 @@
--- phpMyAdmin SQL Dump
--- version 5.0.2
--- https://www.phpmyadmin.net/
+-- MariaDB dump 10.17  Distrib 10.4.14-MariaDB, for Win64 (AMD64)
 --
--- Servidor: 127.0.0.1
--- Tiempo de generaci贸n: 30-10-2020 a las 18:54:00
--- Versi贸n del servidor: 10.4.14-MariaDB
--- Versi贸n de PHP: 7.4.10
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- Host: localhost    Database: 2daw
+-- ------------------------------------------------------
+-- Server version	10.4.14-MariaDB
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,POSTGRESQL' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de datos: `2daw`
+-- Table structure for table "empleados"
 --
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS "empleados";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "empleados" (
+  "id" int(11) NOT NULL,
+  "dni" varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  "nombre" varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  "apellidos" varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  "email" varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  "telefono" varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
+  "fechanac" date DEFAULT NULL,
+  "cargo" varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  "estado" varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY ("id")
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Estructura de tabla para la tabla `empleados`
+-- Dumping data for table "empleados"
 --
 
-CREATE TABLE `empleados` (
-  `id` int(11) NOT NULL,
-  `dni` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
-  `apellidos` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `fechanac` date DEFAULT NULL,
-  `cargo` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `estado` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+LOCK TABLES "empleados" WRITE;
+/*!40000 ALTER TABLE "empleados" DISABLE KEYS */;
+INSERT INTO "empleados" VALUES (2,'47526684-B','Antonio','Almeida','antonioal@gmail.com','632335544','2000-05-09','RRHH','Activo'),(7,'34454398-F','Manolo','G髆ez','manologomez@gmail.com','65625998','1998-05-10','Director t閏nico','activo'),(10,'34454391-F','Uno','1','luis@gmail.com','646251447','1998-05-10','CEO2','activo'),(11,'34454392-F','Dos','2','luis@gmail.com','646251447','1998-05-10','CEO2','activo'),(12,'34454393-F','Tres','3','luis@gmail.com','646251447','1998-05-10','CEO2','activo'),(13,'34454394-F','Cuatro','4','luis@gmail.com','646251447','1998-05-10','CEO2','activo'),(14,'34454395-F','Cinco','5','luis@gmail.com','646251447','1998-05-10','CEO2','activo'),(15,'34454396-F','Seis','6','luis@gmail.com','646251447','1998-05-10','CEO2','activo'),(16,'34454397-F','Siete','7','luis@gmail.com','646251447','1998-05-10','CEO2','activo'),(17,'34454398-F','Ocho','8','luis@gmail.com','646251447','1998-05-10','CEO2','activo');
+/*!40000 ALTER TABLE "empleados" ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Volcado de datos para la tabla `empleados`
---
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-INSERT INTO `empleados` (`id`, `dni`, `nombre`, `apellidos`, `email`, `telefono`, `fechanac`, `cargo`, `estado`) VALUES
-(2, '47526684-B', 'Antonio', 'Almeida', 'antonioal@gmail.com', '632335544', '2000-05-09', 'RRHH', 'Activo'),
-(7, '34454398-F', 'Manolo', 'G贸mez', 'manologomez@gmail.com', '65625998', '1998-05-10', 'Director t茅cnico', 'activo'),
-(10, '34454391-F', 'Uno', '1', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo'),
-(11, '34454392-F', 'Dos', '2', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo'),
-(12, '34454393-F', 'Tres', '3', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo'),
-(13, '34454394-F', 'Cuatro', '4', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo'),
-(14, '34454395-F', 'Cinco', '5', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo'),
-(15, '34454396-F', 'Seis', '6', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo'),
-(16, '34454397-F', 'Siete', '7', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo'),
-(17, '34454398-F', 'Ocho', '8', 'luis@gmail.com', '646251447', '1998-05-10', 'CEO2', 'activo');
-
---
--- 脥ndices para tablas volcadas
---
-
---
--- Indices de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `empleados`
---
-ALTER TABLE `empleados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Dump completed on 2020-10-30 21:14:32
