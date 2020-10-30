@@ -14,6 +14,8 @@
 
     //Conexión a BD
     function conectar($basededatos) {
+        //CONECTAR EN LOCAL
+/*
         $MySQL_host = "localhost";
         $MySQL_user = "admin";
         $MySQL_password = "admin";
@@ -24,7 +26,21 @@
             return $conexion;
 		} catch (PDOException $e){
 		    echo $e->getMessage();
-		}   
+        }
+ */       
+        //HEROKU
+        
+        $MySQL_host = "ec2-54-247-94-127.eu-west-1.compute.amazonaws.com";
+        $MySQL_user = "nbhnrjnnpptrru";
+        $MySQL_password = "b43452f1524634c377aabad13c768af8b6aed11d31b9a8d81dd9b752df61f08a";
+        try {
+		    $dsn = "mysql:host=$MySQL_host;dbname=ec2-54-247-94-127.eu-west-1.compute.amazonaws.com";
+            $conexion = new PDO($dsn, $MySQL_user,  $MySQL_password);
+            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conexion;
+		} catch (PDOException $e){
+		    echo $e->getMessage();
+		}
     }
 
     //Obtener el número de páginas de empleados
