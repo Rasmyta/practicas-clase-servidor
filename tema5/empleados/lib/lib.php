@@ -102,8 +102,8 @@
             $consulta = "SELECT * FROM empleados ";
             if (strlen($filtro) > 0) {                
                 $consulta .= " WHERE dni = :filtro ";
-                $consulta .= " OR apellidos LIKE '%:filtro%')";
-                $consulta .= " OR nombre LIKE '%:filtro%')";
+                $consulta .= " OR apellidos LIKE '%:filtro%'";
+                $consulta .= " OR nombre LIKE '%:filtro%'";
             }
             //Añadimos la búsqueda a la consulta
             $consulta .= " ORDER BY apellidos";
