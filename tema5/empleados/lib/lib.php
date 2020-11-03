@@ -49,7 +49,7 @@
         $MySQL_user = "nbhnrjnnpptrru";
         $MySQL_password = "b43452f1524634c377aabad13c768af8b6aed11d31b9a8d81dd9b752df61f08a";
         try {
-		    $dsn = "mysql:host=$MySQL_host;dbname=da91vnea8ibtse;port=5432";  //OJO hay que poner el puerto
+		    $dsn = "mysql:host=$MySQL_host;dbname=da91vnea8ibtse";  
             $conexion = new PDO($dsn, $MySQL_user,  $MySQL_password);
             $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conexion;
