@@ -111,7 +111,8 @@
 
             //Preparamos la consulta
             $stmt = $conexion->prepare($consulta);
-            $stmt->bindParam(":filtro",$filtro);
+            if (strlen($filtro) > 0)
+                $stmt->bindParam(":filtro",$filtro);
             //Ejecutamos la consulta
             $stmt->execute();
             //Devolvemos los resultados
