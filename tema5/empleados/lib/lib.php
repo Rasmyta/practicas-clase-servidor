@@ -65,20 +65,19 @@
 
 
 
-
-
     //Obtener el número de páginas de empleados
     define("RESPP",3);
     function numPaginas($filtro) {
         $consulta = "SELECT * FROM empleados";
-        if (!empty($filtro)) {                
+        if (strlen($filtro) > 0) {                
             $consulta .= " WHERE dni = :filtro ";
             $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
             $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
         }
         $conexion = conectar("2daw");
         $stmt = $conexion->prepare($consulta);
-        $stmt->bindParam(":filtro",$filtro);
+        if (strlen($filtro) > 0)
+            $stmt->bindParam(":filtro",$filtro);
         $stmt->execute();
         $count = $stmt->rowCount();
         $conexion = null;
@@ -97,7 +96,7 @@
             $conexion->query("SET NAMES utf8");            
             //Consulta de todos los empleados
             $consulta = "SELECT * FROM empleados ";
-            if (!empty($filtro)) {                
+            if (strlen($filtro) > 0) {                
                 $consulta .= " WHERE dni = :filtro ";
                 $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
                 $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
