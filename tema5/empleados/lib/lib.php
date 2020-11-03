@@ -28,8 +28,8 @@
 		    echo $e->getMessage();
         }
  */       
-        //HEROKU
-        
+        //HEROKU CLEARDB
+  /*      
         $MySQL_host = "eu-cdbr-west-03.cleardb.net";
         $MySQL_user = "b769522ed9fce5";
         $MySQL_password = "7d9d2daf";
@@ -42,6 +42,25 @@
 		    echo $e->getMessage();
 		}
     }
+*/
+
+        //HEROKU POSTGRES
+        $MySQL_host = "ec2-54-247-94-127.eu-west-1.compute.amazonaws.com";
+        $MySQL_user = "nbhnrjnnpptrru";
+        $MySQL_password = "b43452f1524634c377aabad13c768af8b6aed11d31b9a8d81dd9b752df61f08a";
+        try {
+		    $dsn = "mysql:host=$MySQL_host;dbname=da91vnea8ibtse";
+            $conexion = new PDO($dsn, $MySQL_user,  $MySQL_password);
+            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conexion;
+		} catch (PDOException $e){
+		    echo $e->getMessage();
+		}
+    }
+
+
+
+
 
     //Obtener el número de páginas de empleados
     define("RESPP",3);
