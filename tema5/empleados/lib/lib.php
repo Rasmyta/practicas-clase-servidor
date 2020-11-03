@@ -15,7 +15,7 @@
     //Conexión a BD
     function conectar($basededatos) {
         //CONECTAR EN LOCAL
-/*
+
         $MySQL_host = "localhost";
         $MySQL_user = "admin";
         $MySQL_password = "admin";
@@ -27,7 +27,7 @@
 		} catch (PDOException $e){
 		    echo $e->getMessage();
         }
- */      
+       
         //HEROKU CLEARDB
   /*      
         $MySQL_host = "eu-cdbr-west-03.cleardb.net";
@@ -43,7 +43,7 @@
 		}
     }
 */
-
+/*
         //HEROKU POSTGRES      
         try {
             $db = parse_url(getenv("DATABASE_URL"));
@@ -60,7 +60,7 @@
         } catch (PDOException $e){
 		    echo $e->getMessage();
         }
-
+*/
     }
 
 
@@ -101,16 +101,16 @@
             //Consulta de todos los empleados
             $consulta = "SELECT * FROM empleados ";
             if (strlen($filtro) > 0) {                
-                $consulta .= " WHERE ( dni = :filtro ";
+                $consulta .= " WHERE dni = :filtro ";
                 $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
-                $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%') )";
+                $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
             }
             //Añadimos la búsqueda a la consulta
             $consulta .= " ORDER BY apellidos";
             //Paginador
             if ($pagina > 0) {
                 $start = (($pagina-1) * RESPP);
-                $consulta .= " OFFSET ".$start."  LIMIT ".RESPP;
+                $consulta .= " LIMIT ".$start." , ".RESPP;
             }
 
             //Preparamos la consulta
@@ -123,9 +123,7 @@
             $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $conexion = null;
         } catch (PDOException $e){
-            //file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
-            echo $consulta;
-            echo $e->getMessage();
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
         }
 
         return $empleados;
@@ -261,6 +259,134 @@
      *  FUNCIONES PARA PROYECTOS
      *  ------------------------------------------------------------------
      * */
+
+         //Hacer consulta
+    function hacerSelectProyectos($filtro) {
+        $proyectos = null;
+
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");            
+            //Consulta de todos los empleados
+            $consulta = "SELECT * FROM proyectos ";
+            if (strlen($filtro) > 0) {                
+                $consulta .= " WHERE nombre = :filtro ";
+                $consulta .= " OR descripcion LIKE CONCAT('%', :filtro, '%')";
+            }
+
+            //Preparamos la consulta
+            $stmt = $conexion->prepare($consulta);
+            if (strlen($filtro) > 0)
+                $stmt->bindParam(":filtro",$filtro);
+            //Ejecutamos la consulta
+            $stmt->execute();
+            //Devolvemos los resultados
+            $proyectos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+
+        return $proyectos;
+    }
+
+
+    //Borrar empleado
+    function borrarProyecto($id) {
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Preparamos la consulta
+            $consulta = "DELETE FROM proyectos WHERE id = :id";
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(':id',$id);
+
+            $stmt->execute();
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+
+    }
+
+    //Insertar nuevo proyecto
+    function insertarProyecto($nombre,$descripcion,$numTrabajadores,$fechaInicio,$fechaFinPrevista) {
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");
+            //Preparamos la consulta
+            $consulta = "INSERT INTO proyectos (nombre,descripcion,numTrabajadores,fechaInicio,fechaFinPrevista) VALUES (";
+            $consulta .= ":nombre, :descripcion, :numTrabajadores, :fechaInicio, :fechaFinPrevista)";
+            $stmt = $conexion->prepare($consulta);
+
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':numTrabajadores', $numTrabajadores);
+            $stmt->bindParam(':fechaInicio', $fechaInicio);
+            $stmt->bindParam(':fechaFinPrevista', $fechaFinPrevista);
+
+            $stmt->execute();
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+    }    
+
+    //Modificar un proyecto existente
+    function modificarProyecto($id,$nombre,$descripcion,$numTrabajadores,$fechaInicio,$fechaFinPrevista) {
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");
+            //Preparamos la consulta
+            $consulta = "UPDATE proyectos SET nombre=:nombre,descripcion=:descripcion,numTrabajadores=:numTrabajadores";
+            $consulta .= ",fechaInicio=:fechaInicio,fechaFinPrevista=:fechaFinPrevista ";
+            $consulta .= "WHERE id=:id";
+            $stmt = $conexion->prepare($consulta);
+
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':numTrabajadores', $numTrabajadores);
+            $stmt->bindParam(':fechaInicio', $fechaInicio);
+            $stmt->bindParam(':fechaFinPrevista', $fechaFinPrevista);
+            $stmt->bindParam(':id', $id);
+
+            $stmt->execute();
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+    } 
+
+    //Hacer consulta para sacar un proyecto por id
+    function hacerSelectIdProyecto($id) {
+        $proyecto = null;
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");            
+            //Consulta sólo del proyecto por id
+            $consulta = "SELECT * FROM proyectos WHERE id = :id";
+            //Preparamos la consulta
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":id", $id);
+            //Ejecutamos la consulta
+            $stmt->execute();
+            //Devolvemos los resultados
+            $proyecto = $stmt->fetch(PDO::FETCH_ASSOC);
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+
+        return $proyecto;
+    }    
 
 
 ?>

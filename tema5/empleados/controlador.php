@@ -92,5 +92,73 @@
 
     }
 
+    //// ACCIONES PARA PROYECTOS
+    // -----------------------------------------------------------
+
+    //Acción de BORRAR un proyecto
+    if (isset($_GET['delete_pro'])) {
+        //Recibimos todos los datos del proyecto y filtramos la entrada
+        $id = filtrado($_GET['delete_pro']);
+
+        //Conectar a BD y hacer delete
+        borrarProyecto($id);
+
+        //Si todo ha ido bien, redirigimos a proyectos.php
+        header("Location: proyectos.php");  
+    }  
+
+    //Acción de INSERTAR un proyecto
+    if (isset($_POST['add_pro'])) {
+        //Recibimos todos los datos del proyecto y filtramos la entrada
+        $nombre = filtrado($_POST['nombre']);
+        $descripcion = filtrado($_POST['descripcion']);
+        $numTrabajadores = filtrado($_POST['numTrabajadores']);
+        $fechaInicio = $_POST['fechaInicio'];
+        $fechaFinPrevista = $_POST['fechaFinPrevista'];
+        
+        //Conectar a BD y hacer insert
+        insertarProyecto($nombre,$descripcion,$numTrabajadores,$fechaInicio,$fechaFinPrevista);
+
+        //Si todo ha ido bien, redirigimos a index.php
+        header("Location: proyectos.php");
+    }  
+
+    //Acción de RECUPERAR proyecto para MODIFICARLO
+    if (isset($_GET['update_pro'])) {
+        //Recibimos todos los datos del empleado y filtramos la entrada
+        $id = filtrado($_GET['update_pro']);
+
+        //Recuperar los datos de ese proyecto para mostrarlos después
+        $proyecto = hacerSelectIdProyecto($id);
+
+        //Si todo ha ido bien, redirigimos a proyectos.php
+        $url = "Location: proyectos.php?accion=update_pro";
+        $url .= "&nombre=".$proyecto['nombre'];
+        $url .= "&descripcion=".$proyecto['descripcion'];
+        $url .= "&numTrabajadores=".$proyecto['numTrabajadores'];
+        $url .= "&fechaInicio=".$proyecto['fechaInicio'];
+        $url .= "&fechaFinPrevista=".$proyecto['fechaFinPrevista'];
+        $url .= "&id=".$proyecto['id']; //Para pasar al modal el identificador de proyecto
+       
+        header($url);  
+    }
+    
+    
+    //Acción de MODIFICAR el proyecto
+    if (isset($_POST['update_pro'])) {
+        //Recibimos todos los datos del empleado y filtramos la entrada
+        $nombre = filtrado($_POST['nombre']);
+        $descripcion = filtrado($_POST['descripcion']);
+        $numTrabajadores = filtrado($_POST['numTrabajadores']);
+        $fechaInicio = $_POST['fechaInicio'];
+        $fechaFinPrevista = $_POST['fechaFinPrevista'];
+        $id = filtrado($_POST['id']);
+
+        modificarProyecto($id,$nombre,$descripcion,$numTrabajadores,$fechaInicio,$fechaFinPrevista);
+
+        header("Location: proyectos.php");
+
+    }    
+
 
 ?>
