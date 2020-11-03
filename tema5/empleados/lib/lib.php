@@ -123,7 +123,8 @@
             $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $conexion = null;
         } catch (PDOException $e){
-            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+            //file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+            echo $e->getMessage();
         }
 
         return $empleados;
