@@ -117,7 +117,7 @@
             $stmt->execute();
             //Devolvemos los resultados
             $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $conexion = null;
+            //$conexion = null;
         } catch (PDOException $e){
             file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
         }
