@@ -108,7 +108,7 @@
             //Paginador
             if ($pagina > 0) {
                 $start = (($pagina-1) * RESPP);
-                $consulta .= " LIMIT ".$start." , ".RESPP;
+                $consulta .= " LIMIT ".$start." , OFFSET ".RESPP;
             }
 
             //Preparamos la consulta
