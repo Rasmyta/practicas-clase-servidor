@@ -96,23 +96,25 @@
             $conexion->query("SET NAMES utf8");            
             //Consulta de todos los empleados
             $consulta = "SELECT * FROM empleados ";
-            if (strlen($filtro) > 0) {                
+            if (strlen($filtro) > 0) {              
+                /*  
                 $consulta .= " WHERE dni = :filtro ";
                 $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
                 $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
+                */
             }
             //Añadimos la búsqueda a la consulta
             $consulta .= " ORDER BY apellidos";
             //Paginador
             if ($pagina > 0) {
                 $start = (($pagina-1) * RESPP);
-                $consulta .= " LIMIT ".$start." , OFFSET ".RESPP;
+                $consulta .= " LIMIT ".$start." , ".RESPP;
             }
 
             //Preparamos la consulta
             $stmt = $conexion->prepare($consulta);
-            if (strlen($filtro) > 0)
-                $stmt->bindParam(":filtro",$filtro);
+            //if (strlen($filtro) > 0)
+            //    $stmt->bindParam(":filtro",$filtro);
             //Ejecutamos la consulta
             $stmt->execute();
             //Devolvemos los resultados
