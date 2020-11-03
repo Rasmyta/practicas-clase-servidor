@@ -45,7 +45,7 @@
 */
 
         //HEROKU POSTGRES
-        $MySQL_host = "ec2-54-247-94-127.eu-west-1.compute.amazonaws.com";
+        $MySQL_host = "postgresql-symmetrical-43642";
         $MySQL_user = "nbhnrjnnpptrru";
         $MySQL_password = "b43452f1524634c377aabad13c768af8b6aed11d31b9a8d81dd9b752df61f08a";
         try {
