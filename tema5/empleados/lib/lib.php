@@ -75,8 +75,8 @@
         $consulta = "SELECT * FROM empleados";
         if (strlen($filtro) > 0) {                
             $consulta .= " WHERE dni = :filtro ";
-            $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
-            $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
+            $consulta .= " OR apellidos LIKE '%:filtro%')";
+            $consulta .= " OR nombre LIKE '%:filtro%')";
         }
         $conexion = conectar("2daw");
         $stmt = $conexion->prepare($consulta);
