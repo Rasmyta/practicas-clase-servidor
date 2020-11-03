@@ -47,7 +47,7 @@
                 <tbody>
 <?php
 		//Comprobar si hemos pulsado el filtro de búsqueda
-		$filtro = "";
+		$filtro = " ";
 		if (isset($_GET['filtro'])) {
 			$filtro = filtrado($_GET['filtro']);
 		} 
