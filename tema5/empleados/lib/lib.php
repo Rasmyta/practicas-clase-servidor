@@ -75,8 +75,8 @@
         $consulta = "SELECT * FROM empleados";
         if (strlen($filtro) > 0) {                
             $consulta .= " WHERE dni = :filtro ";
-            $consulta .= " OR apellidos LIKE '%".":filtro"."%'";
-            $consulta .= " OR nombre LIKE '%".":filtro"."%'";
+            $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
+            $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%')";
         }
         $conexion = conectar("2daw");
         $stmt = $conexion->prepare($consulta);
@@ -101,16 +101,16 @@
             //Consulta de todos los empleados
             $consulta = "SELECT * FROM empleados ";
             if (strlen($filtro) > 0) {                
-                $consulta .= " WHERE dni = :filtro ";
-                $consulta .= " OR apellidos LIKE '%".":filtro"."%'";
-                $consulta .= " OR nombre LIKE '%".":filtro"."%'";
+                $consulta .= " WHERE ( dni = :filtro ";
+                $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
+                $consulta .= " OR nombre LIKE CONCAT('%', :filtro, '%') )";
             }
             //Añadimos la búsqueda a la consulta
             $consulta .= " ORDER BY apellidos";
             //Paginador
             if ($pagina > 0) {
                 $start = (($pagina-1) * RESPP);
-                $consulta .= " LIMIT ".$start." , ".RESPP;
+                $consulta .= " LIMIT ".$start." , OFFSET ".RESPP;
             }
 
             //Preparamos la consulta
@@ -124,8 +124,8 @@
             $conexion = null;
         } catch (PDOException $e){
             //file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
-            echo $e->getMessage();
             echo $consulta;
+            echo $e->getMessage();
         }
 
         return $empleados;
