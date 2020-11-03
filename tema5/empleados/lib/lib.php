@@ -106,7 +106,7 @@
             //Paginador
             if ($pagina > 0) {
                 $start = (($pagina-1) * RESPP);
-                $consulta .= " LIMIT ".$start." , ".RESPP;
+                $consulta .= " LIMIT ".$start." , OFFSET ".RESPP;
             }
 
             //Preparamos la consulta
@@ -117,7 +117,7 @@
             $stmt->execute();
             //Devolvemos los resultados
             $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            //$conexion = null;
+            $conexion = null;
         } catch (PDOException $e){
             file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
         }
