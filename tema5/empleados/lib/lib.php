@@ -27,7 +27,7 @@
 		} catch (PDOException $e){
 		    echo $e->getMessage();
         }
- */       
+ */      
         //HEROKU CLEARDB
   /*      
         $MySQL_host = "eu-cdbr-west-03.cleardb.net";
@@ -64,6 +64,10 @@
     }
 
 
+    /*
+     *  FUNCIONES PARA EMPLEADOS
+     *  ------------------------------------------------------------------
+     * */
 
     //Obtener el número de páginas de empleados
     define("RESPP",3);
@@ -96,7 +100,6 @@
             $conexion->query("SET NAMES utf8");            
             //Consulta de todos los empleados
             $consulta = "SELECT * FROM empleados ";
-            /*
             if (strlen($filtro) > 0) {                
                 $consulta .= " WHERE dni = :filtro ";
                 $consulta .= " OR apellidos LIKE CONCAT('%', :filtro, '%')";
@@ -111,10 +114,9 @@
             }
 
             //Preparamos la consulta
-            */
             $stmt = $conexion->prepare($consulta);
-            //if (strlen($filtro) > 0)
-            //    $stmt->bindParam(":filtro",$filtro);
+            if (strlen($filtro) > 0)
+                $stmt->bindParam(":filtro",$filtro);
             //Ejecutamos la consulta
             $stmt->execute();
             //Devolvemos los resultados
@@ -252,6 +254,11 @@
         }
     }  
     
+
+    /*
+     *  FUNCIONES PARA PROYECTOS
+     *  ------------------------------------------------------------------
+     * */
 
 
 ?>

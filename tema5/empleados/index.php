@@ -5,6 +5,18 @@
 
 <body>
 
+	<div class="container mt-5">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-4">
+						<h6><a href='index.php' class='mr-2'>EMPLEADOS</a><a href='proyectos.php'>PROYECTOS</a></h6>
+					</div>
+                </div>
+            </div>
+        </div>
+	</div>
+
     <div class="container mt-5">
         <div class="table-wrapper">
             <div class="table-title">
