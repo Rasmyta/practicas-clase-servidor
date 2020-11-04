@@ -406,10 +406,10 @@
             $conexion->query("SET NAMES utf8");            
             //Consulta de todos los empleados
             $consulta = "SELECT empleados.nombre, trabaja.fechaInicio, trabaja.fechaFin, trabaja.puesto FROM trabaja ";
-            $consulta .= " JOIN empleados JOIN proyectos ";
-            $consulta .= " WHERE trabaja.id_empleado = empleados.id AND ";
-            $consulta .= " trabaja.id_proyecto = proyectos.id ";          
-            $consulta .= " AND trabaja.id_proyecto = :id ";
+            $consulta .= " LEFT JOIN (empleados,proyectos) ";
+            $consulta .= " ON (trabaja.id_empleado = empleados.id AND ";
+            $consulta .= " trabaja.id_proyecto = proyectos.id) ";          
+            $consulta .= " WHERE trabaja.id_proyecto = :id ";
             $consulta .= " AND trabaja.fechaInicio > proyectos.fechaInicio";
             //$consulta .= " AND trabaja.fechaFin < proyectos.fechaFinPrevista";
 
