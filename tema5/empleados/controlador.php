@@ -12,6 +12,9 @@
      * CONTROLADOR
      */ 
 
+    //// ACCIONES PARA EMPLEADOS
+    // -----------------------------------------------------------
+
     //Acción de INSERTAR un empleado
     if (isset($_POST['add'])) {
         //Recibimos todos los datos del empleado y filtramos la entrada
@@ -159,6 +162,20 @@
         header("Location: proyectos.php");
 
     }    
+
+   //// ACCIONES PARA TRABAJA
+    // -----------------------------------------------------------
+
+    //Ver los empleados de un proyecto
+    if (isset($_GET['verParticipantes'])) {
+        $idProyecto = filtrado($_GET['verParticipantes']);
+        $nombreProyecto = filtrado($_GET['nombre']);
+
+        //Llamamos directamente al fichero trabaja.php con el id de proyecto
+        header("Location: trabaja.php?verParticipantes=".$idProyecto."&nombre=".$nombreProyecto);
+
+    }
+
 
 
 ?>

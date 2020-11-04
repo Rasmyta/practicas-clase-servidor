@@ -74,7 +74,7 @@
 							<?php echo $proyecto['numTrabajadores']; ?>
 						</td>
 						<td>
-							<a href="controlador.php?ver_empleados=<?php echo $proyecto['id']; ?>">
+							<a href="controlador.php?verParticipantes=<?php echo $proyecto['id']; ?>&nombre=<?php echo $proyecto['nombre']; ?>">
 								<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE55A;</i>
 							</a>
 						</td>
