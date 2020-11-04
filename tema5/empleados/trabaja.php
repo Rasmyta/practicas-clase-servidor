@@ -58,7 +58,7 @@
 		foreach($empleados as $empleado){
 ?>
 		            <tr>
-                        <td><?php echo $empleado['id']; ?></td>
+                        <td><?php echo $empleado['nombre']; ?></td>
                         <td><?php echo $empleado['fechaInicio']; ?></td>
 						<td><?php echo $empleado['fechaFin']; ?></td>
 						<td><?php echo $empleado['puesto']; ?></td>

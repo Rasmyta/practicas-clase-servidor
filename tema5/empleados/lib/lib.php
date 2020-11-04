@@ -389,4 +389,44 @@
     }    
 
 
+    /*
+     *  FUNCIONES PARA TRABAJA (PROYECTOS-EMPLEADOS)
+     *  ------------------------------------------------------------------
+     * */
+
+
+    function obtenerEmpleadosPorIdProyecto($id) {
+
+        $empleados = null;
+
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");            
+            //Consulta de todos los empleados
+            $consulta = "SELECT empleados.nombre, trabaja.fechaInicio, trabaja.fechaFin, trabaja.puesto FROM trabaja ";
+            $consulta .= " JOIN empleados JOIN proyectos ";
+            $consulta .= " WHERE trabaja.id_empleado = empleados.id AND ";
+            $consulta .= " trabaja.id_proyecto = proyectos.id ";          
+            $consulta .= " AND trabaja.id_proyecto = :id ";
+            $consulta .= " AND trabaja.fechaInicio > proyectos.fechaInicio";
+            //$consulta .= " AND trabaja.fechaFin < proyectos.fechaFinPrevista";
+
+            //Preparamos la consulta
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":id",$id);
+            //Ejecutamos la consulta
+            $stmt->execute();
+            //Devolvemos los resultados
+            $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $conexion = null;
+        } catch (PDOException $e){
+            //file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+            echo $e->getMessage();
+        }
+
+        return $empleados;        
+
+    }
 ?>
