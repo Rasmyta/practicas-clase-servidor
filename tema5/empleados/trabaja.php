@@ -64,8 +64,12 @@
 						<td><?php echo $empleado['puesto']; ?></td>
                         <td>
 							
-							<a href="controlador.php?update_particip=<?php echo $empleado['id']; ?>"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="controlador.php?delete_particip=<?php echo $empleado['id'];?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="controlador.php?update_particip=<?php echo $empleado['id_empleado']; ?>&idProyecto=<?php echo $empleado['id_proyecto']; ?>&fechaInicio=<?php echo $empleado['fechaInicio']; ?>&nombreProyecto=<?php echo filtrado($_GET['nombre']); ?>">
+                                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                            </a>
+                            <a href="controlador.php?delete_particip=<?php echo $empleado['id_empleado']; ?>&idProyecto=<?php echo $empleado['id_proyecto']; ?>&fechaInicio=<?php echo $empleado['fechaInicio']; ?>&nombreProyecto=<?php echo filtrado($_GET['nombre']); ?>">
+                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                            </a>
 						</td>
                     </tr>
 <?php

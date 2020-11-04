@@ -405,7 +405,8 @@
             //Para evitar problemas con caracteres especiales
             $conexion->query("SET NAMES utf8");            
             //Consulta de todos los empleados
-            $consulta = "SELECT empleados.nombre, trabaja.fechaInicio, trabaja.fechaFin, trabaja.puesto FROM trabaja ";
+            $consulta = "SELECT empleados.nombre, trabaja.fechaInicio, trabaja.fechaFin, trabaja.puesto, ";
+            $consulta .= " trabaja.id_empleado, trabaja.id_proyecto FROM trabaja ";
             $consulta .= " LEFT JOIN (empleados,proyectos) ";
             $consulta .= " ON (trabaja.id_empleado = empleados.id AND ";
             $consulta .= " trabaja.id_proyecto = proyectos.id) ";          
@@ -429,4 +430,26 @@
         return $empleados;        
 
     }
+
+    //Borrar participante de un proyecto en una fecha
+    function deleteParticipante($idEmpleado,$idProyecto,$fechaInicio) {
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Preparamos la consulta
+            $consulta = "DELETE FROM trabaja WHERE id_empleado = :id_empleado AND id_proyecto = :id_proyecto AND fechaInicio = :fechaInicio";
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(':id_empleado',$idEmpleado);
+            $stmt->bindParam(':id_proyecto',$idProyecto);
+            $stmt->bindParam(':fechaInicio',$fechaInicio);
+
+            $stmt->execute();
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+
+    }
+
+
 ?>

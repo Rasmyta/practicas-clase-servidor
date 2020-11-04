@@ -176,6 +176,20 @@
 
     }
 
+    //Eliminar participante de un proyecto
+    if (isset($_GET['delete_particip'])) {
+        $idEmpleado = filtrado($_GET['delete_particip']);
+        $idProyecto = filtrado($_GET['idProyecto']);
+        $fechaInicio = filtrado($_GET['fechaInicio']);
+        $nombreProyecto = filtrado($_GET['nombreProyecto']);
+
+        //Llamamos a la BD a eliminar ese participante en ese proyecto en esa fecha de inicio
+        deleteParticipante($idEmpleado,$idProyecto,$fechaInicio);
+
+        header("Location: trabaja.php?verParticipantes=".$idProyecto."&nombre=".$nombreProyecto);
+
+    }
+
 
 
 ?>
