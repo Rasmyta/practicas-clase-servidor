@@ -21,15 +21,17 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-4">
-						<h2>TRABAJADORES DEL PROYECTO 
+                    <div class="col-sm-9">
+						<h2>PROYECTO: 
                             <?php
+                                //Sacamos el nombre del proyecto recibido por GET
                                 if (isset($_GET['nombre']))
                                     echo filtrado($_GET['nombre']);
                             ?>
                         </h2>
+                        <h4 class='text-primary'>Integrantes del proyecto</h4>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-sm-3">
 						<a href="#addProyectoModal" class="btn btn-success" data-toggle="modal"><span>Añadir Empleado</span></a>
 					</div>
 				</div>
@@ -46,6 +48,10 @@
                     </tr>
                 </thead>
                 <tbody>
+
+
+
+
 <?php
 		//Mostramos los empleados de este proyecto
 		$proyectos = hacerSelectProyectos($filtro);
