@@ -45,7 +45,8 @@
                     <tr>
                         <th>NOMBRE</th>
                         <th>DESCRIPCION</th>
-						<th>NUM. TRABAJADORES</th>
+						<th>NÚMERO MÁXIMO</th>
+						<th>INTEGRANTES</th>
                         <th>FECHA INICIO</th>
                         <th>FECHA FIN PREVISTA</th>
 						<th></th>
@@ -69,7 +70,14 @@
 		            <tr>
                         <td><?php echo $proyecto['nombre']; ?></td>
                         <td><?php echo $proyecto['descripcion']; ?></td>
-						<td><?php echo $proyecto['numTrabajadores']; ?></td>
+						<td>
+							<?php echo $proyecto['numTrabajadores']; ?>
+						</td>
+						<td>
+							<a href="controlador.php?ver_empleados=<?php echo $proyecto['id']; ?>">
+								<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE55A;</i>
+							</a>
+						</td>
 						<td><?php echo $proyecto['fechaInicio']; ?></td>
 						<td><?php echo $proyecto['fechaFinPrevista']; ?></td>
                         <td>
