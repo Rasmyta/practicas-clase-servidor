@@ -49,33 +49,23 @@
                 </thead>
                 <tbody>
 
-
-
-
 <?php
-		//Mostramos los empleados de este proyecto
-		$proyectos = hacerSelectProyectos($filtro);
+        //Mostramos los empleados de este proyecto
+        $id = filtrado($_GET['verParticipantes']);
+		$empleados = obtenerEmpleadosPorIdProyecto($id);
 
 		//Recorremos los resultados
-		foreach($proyectos as $proyecto){
+		foreach($empleados as $empleado){
 ?>
 		            <tr>
-                        <td><?php echo $proyecto['nombre']; ?></td>
-                        <td><?php echo $proyecto['descripcion']; ?></td>
-						<td>
-							<?php echo $proyecto['numTrabajadores']; ?>
-						</td>
-						<td>
-							<a href="controlador.php?verParticipantes=<?php echo $proyecto['id']; ?>">
-								<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE55A;</i>
-							</a>
-						</td>
-						<td><?php echo $proyecto['fechaInicio']; ?></td>
-						<td><?php echo $proyecto['fechaFinPrevista']; ?></td>
+                        <td><?php echo $empleado['id']; ?></td>
+                        <td><?php echo $empleado['fechaInicio']; ?></td>
+						<td><?php echo $empleado['fechaFin']; ?></td>
+						<td><?php echo $empleado['puesto']; ?></td>
                         <td>
 							
-							<a href="controlador.php?update_pro=<?php echo $proyecto['id']; ?>"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-							<a href="controlador.php?delete_pro=<?php echo $proyecto['id'];?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+							<a href="controlador.php?update_particip=<?php echo $empleado['id']; ?>"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+							<a href="controlador.php?delete_particip=<?php echo $empleado['id'];?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
                     </tr>
 <?php
