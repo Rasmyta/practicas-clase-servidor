@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2020 a las 17:47:31
+-- Tiempo de generación: 04-11-2020 a las 17:35:24
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -79,6 +79,33 @@ INSERT INTO `proyectos` (`id`, `nombre`, `descripcion`, `numTrabajadores`, `fech
 (3, 'Web de los republicanos de Trump', 'Esto es la bomba', 3, '2020-10-26', '2020-11-28'),
 (5, 'Javier', 'Esto es la bomba', 3, '2020-11-14', '2020-11-29');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `trabaja`
+--
+
+CREATE TABLE `trabaja` (
+  `id_empleado` int(11) NOT NULL,
+  `id_proyecto` int(11) NOT NULL,
+  `fechaInicio` date NOT NULL,
+  `fechaFin` date DEFAULT NULL,
+  `puesto` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `trabaja`
+--
+
+INSERT INTO `trabaja` (`id_empleado`, `id_proyecto`, `fechaInicio`, `fechaFin`, `puesto`) VALUES
+(10, 1, '2020-10-10', NULL, 'Programador'),
+(10, 1, '2020-10-11', NULL, NULL),
+(10, 1, '2020-12-15', NULL, NULL),
+(11, 3, '2020-10-10', NULL, NULL),
+(12, 1, '2020-11-12', '2021-02-01', 'documentación'),
+(13, 1, '2020-11-12', '2021-03-01', 'programador php'),
+(14, 1, '2020-11-14', '2021-02-15', 'analista');
+
 --
 -- Índices para tablas volcadas
 --
@@ -96,6 +123,13 @@ ALTER TABLE `proyectos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `trabaja`
+--
+ALTER TABLE `trabaja`
+  ADD PRIMARY KEY (`id_empleado`,`id_proyecto`,`fechaInicio`),
+  ADD KEY `id_proyecto_fk_idx` (`id_proyecto`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -110,6 +144,17 @@ ALTER TABLE `empleados`
 --
 ALTER TABLE `proyectos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `trabaja`
+--
+ALTER TABLE `trabaja`
+  ADD CONSTRAINT `id_empleado_fk` FOREIGN KEY (`id_empleado`) REFERENCES `empleados` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `id_proyecto_fk` FOREIGN KEY (`id_proyecto`) REFERENCES `proyectos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
