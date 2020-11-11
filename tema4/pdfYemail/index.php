@@ -84,7 +84,7 @@ try {
     
     $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', 0);
     $html2pdf->writeHTML($content);
-    $html2pdf->output('factura.pdf');
+    //$html2pdf->output('factura.pdf');
     $stringFile = $html2pdf->output('factura.pdf','S');
     file_put_contents("facturaEmail.pdf",$stringFile);
 
