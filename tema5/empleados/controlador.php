@@ -190,6 +190,22 @@
 
     }
 
+    //Añadir un empleado al proyecto
+    if (isset($_POST['addEmpleadoProyecto'])) {
+        //Nos quedamos con el id de empleado seleccionado y la fecha de inico
+        $idEmpleado = filtrado($_POST['integrantes']);
+        $fechaInicio = filtrado($_POST['fechaInicio']);
+        $idProyecto = $_POST['idProyecto'];
+        $nombreProyecto = $_POST['nombreProyecto'];
+        $puesto = filtrado($_POST['puesto']);
+
+        //Lo añadimos a la BD
+        $error = addEmpleadoProyecto($idProyecto,$idEmpleado,$fechaInicio,$puesto);
+
+        header("Location: trabaja.php?verParticipantes=".$idProyecto."&nombre=".$nombreProyecto."&error=".$error);
+
+    }
+
 
 
 ?>

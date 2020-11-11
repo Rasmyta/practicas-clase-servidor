@@ -71,6 +71,7 @@
 
     //Obtener el número de páginas de empleados
     define("RESPP",3);
+
     function numPaginas($filtro) {
         $consulta = "SELECT * FROM empleados";
         if (strlen($filtro) > 0) {                
@@ -89,7 +90,8 @@
         return ceil($count / RESPP);
     }
 
-    //Hacer consulta
+    //Obtener todos los empleados de la empresa
+    //Acepta un filtro de búsqueda y paginación de resultados
     function hacerSelect($filtro,$pagina) {
         //Resultados por página a mostrar
 
@@ -447,6 +449,65 @@
             $conexion = null;
         } catch (PDOException $e){
             file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+
+    }
+
+    //Obtener todos los empleados de la empresa
+    //Hacer consulta
+    function obtenerEmpleados() {
+        //Resultados por página a mostrar
+
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");            
+            //Consulta de todos los empleados
+            $consulta = "SELECT id,nombre,apellidos,dni FROM empleados ";
+            //Añadimos la búsqueda a la consulta
+            $consulta .= " ORDER BY apellidos";
+
+            //Preparamos la consulta
+            $stmt = $conexion->prepare($consulta);
+
+            //Ejecutamos la consulta
+            $stmt->execute();
+
+            //Devolvemos los resultados
+            $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+        }
+
+        return $empleados;
+    }   
+    
+    //Añadir empleado a un proyecto
+    function addEmpleadoProyecto($idProyecto,$idEmpleado,$fechaInicio,$puesto) {
+        try {
+            //Establecer conexión
+            $conexion = conectar("2daw");
+            //Para evitar problemas con caracteres especiales
+            $conexion->query("SET NAMES utf8");
+            //Preparamos la consulta
+            $consulta = "INSERT INTO trabaja (id_proyecto,id_empleado,fechaInicio,puesto) VALUES (";
+            $consulta .= ":id_proyecto, :id_empleado, :fechaInicio, :puesto)";
+            $stmt = $conexion->prepare($consulta);
+
+            $stmt->bindParam(':id_proyecto', $idProyecto);
+            $stmt->bindParam(':id_empleado', $idEmpleado);
+            $stmt->bindParam(':fechaInicio', $fechaInicio);
+            $stmt->bindParam(':puesto',$puesto);
+
+            $stmt->execute();
+            $conexion = null;
+        } catch (PDOException $e){
+            file_put_contents("bd.log",$e->getMessage(), FILE_APPEND | LOCK_EX);
+            //echo $e->getMessage();
+            if (strstr($e->getMessage(),"Duplicate entry"))
+                return "Duplicada";
         }
 
     }
