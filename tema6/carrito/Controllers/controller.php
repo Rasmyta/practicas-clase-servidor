@@ -10,20 +10,18 @@
 
     //Acción de añadir producto al carro
     if (isset($_POST['comprar'])) {
+        //Llamamos a BD para obtener el objeto producto con ese id
         $producto = ProductoDB::getProductoId($_POST['item-id']);
-
-        $lineaCarro = new LineaCarro($producto,1);
-        
+        //Creamos una línea de carro con ese producto
+        $lineaCarro = new LineaCarro($producto);
+        //Deserializamos el carro de la sesión para añadirle esa línea de carro
         $carro = unserialize($_SESSION['carrito']);
-
+        //Añadimos al carro esa línea de carro
         $carro->add($lineaCarro);
+        //Volvemos a serializar el carro con la nueva línea añadida
         $_SESSION['carrito'] = serialize($carro);
 
-        $lineas = $carro->getLineasCarro();
-        foreach($lineas as $linea) {
-            echo $linea->getProducto()->getNombre();
-        }
-        
+        header('Location: ../index.php');
     }
 
 
