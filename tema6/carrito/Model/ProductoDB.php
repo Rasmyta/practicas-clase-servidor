@@ -20,8 +20,9 @@ class ProductoDB {
         $stmt->execute();
         $resultado = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Carrodelacompra\Producto");
         
-        return $resultado;
         ConexionDB::desconectar();
+        return $resultado;
+        
 
     }
 
@@ -38,8 +39,9 @@ class ProductoDB {
             $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Carrodelacompra\Producto");
             $resultado = $stmt->fetch();
             
-            return $resultado;
             ConexionDB::desconectar();
+            return $resultado;
+            
     
         }
 
