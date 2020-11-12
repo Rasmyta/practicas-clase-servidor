@@ -9,6 +9,7 @@ namespace Carrodelacompra;
 
  class Producto {
 
+    private $id;
     private $nombre;
     private $descripcion;
     private $precio;
@@ -16,15 +17,21 @@ namespace Carrodelacompra;
     private $imagen;
 
     //Constructor
-    public function __construct($unNombre, $unaDescripcion, $unPrecio, $unaImagen, $unIva=1.21) {
+    public function __construct($unId=0,$unNombre="", $unaDescripcion="", $unPrecio=0, $unaImagen="", $unIva=1.21) {
+        $this->id = $unId;
         $this->nombre = $unNombre;
         $this->descripcion = $unaDescripcion;
         $this->precio = $unPrecio;
         $this->imagen = $unaImagen;
         $this->iva = $unIva;
     }
+    
 
     //Getters y setters
+
+    public function getId() {
+        return $this->id;
+    }
 
     public function getNombre() {
         return $this->nombre;

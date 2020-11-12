@@ -1,4 +1,6 @@
 <?php
+namespace Carrodelacompra;
+use \PDO;
 
 class ConexionDB {
 
@@ -30,12 +32,15 @@ class ConexionDB {
 
 }
 
-
+/*
 $consulta = "SELECT * FROM empleados";
+
 $conexion = ConexionDB::conectar("2daw");
+
 $stmt = $conexion->prepare($consulta);
 $stmt->execute();
 $count = $stmt->rowCount();
 echo $count;
 
 ConexionDB::desconectar();
+*/
