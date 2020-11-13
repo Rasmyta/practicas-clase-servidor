@@ -1,6 +1,7 @@
 <?php
 namespace Carrodelacompra;
 use \PDO;
+use \PDOException;
 
 class ConexionDB {
 

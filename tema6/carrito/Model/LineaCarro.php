@@ -31,10 +31,11 @@ use Carrodelacompra\Producto;
 
     public function setProducto($unProducto) {
         $this->producto = $unProducto;
-        $this->cantidad = $unaCantidad;
     }
     
-
+    public function setCantidad($unaCantidad) {
+        $this->cantidad = $unaCantidad;
+    }
 
 
  }

@@ -25,7 +25,7 @@ class CarroCompra {
     }
 
     public function setLineasCarro($lineasCarro) {
-        $this->lineasCarro = $lineaCarro;
+        $this->lineasCarro = $lineasCarro;
     }
 
     //Añadir una línea al carro de la compra
