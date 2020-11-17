@@ -5,10 +5,13 @@
     include_once("../Model/LineaCarro.php");
     include_once("../Model/CarroCompra.php");
     include_once("../Views/VistaIndex.php");
+    include_once("../Views/VistaCarro.php");
     use Carrodelacompra\VistaIndex;
+    use Carrodelacompra\VistaCarro;
     use Carrodelacompra\CarroCompra;
     use Carrodelacompra\ProductoDB;
     use Carrodelacompra\LineaCarro;
+    
 
     //Acción de añadir producto al carro
     if (isset($_POST['comprar'])) {
@@ -24,6 +27,13 @@
         $_SESSION['carrito'] = serialize($carro);
 
         header("Location: ../index.php");
+    }
+
+    //Ver el carro de la compra
+    if (isset($_GET['accion'])) {
+        if ($_GET['accion'] == 'verCarro') {
+            VistaCarro::render(unserialize($_SESSION['carrito']));
+        }
     }
 
 

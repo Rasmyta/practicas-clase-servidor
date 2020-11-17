@@ -41,6 +41,14 @@ use Carrodelacompra\Producto;
         $this->cantidad++;
     }
 
+    public function getSubTotal() {
+        return $this->getProducto()->getPrecio() * $this->getCantidad();
+    }
+
+    public function getSubTotalIVA() {
+        return $this->getProducto()->getPrecio() * $this->getProducto()->getIva() * $this->getCantidad();
+    }
+
 
  }
 

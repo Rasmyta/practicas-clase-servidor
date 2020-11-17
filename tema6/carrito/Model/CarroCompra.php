@@ -49,6 +49,16 @@ class CarroCompra {
         return count($this->lineasCarro);
     }
 
+    //Calculo del precio total del carro
+    public function getTotal() {
+        $total=0;
+        foreach($this->getLineasCarro() as $linea) {
+            $total += $linea->getSubtotalIVA();
+        }
+
+        return $total;
+    }
+
 
 }
 
