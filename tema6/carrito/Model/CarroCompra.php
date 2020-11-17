@@ -30,7 +30,23 @@ class CarroCompra {
 
     //Añadir una línea al carro de la compra
     public function add($unaLineaCarro) {
-        array_push($this->lineasCarro,$unaLineaCarro);
+        //Comprobamos si el id ya está en el carro
+        $idProducto = $unaLineaCarro->getProducto()->getId();
+        $encontrado = false;
+        foreach($this->lineasCarro as $linea) {
+            if ($linea->getProducto()->getId() == $idProducto) {
+                $encontrado = true;
+                $linea->incrementarCantidad();
+            }
+        }
+        //Si no está añado una nueva línea
+        if (!$encontrado)
+            array_push($this->lineasCarro,$unaLineaCarro);
+    }
+
+    //Contar número de líneas de carro de la compra
+    public function count() {
+        return count($this->lineasCarro);
     }
 
 

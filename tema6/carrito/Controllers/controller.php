@@ -4,6 +4,8 @@
     include_once("../Model/ProductoDB.php");
     include_once("../Model/LineaCarro.php");
     include_once("../Model/CarroCompra.php");
+    include_once("../Views/VistaIndex.php");
+    use Carrodelacompra\VistaIndex;
     use Carrodelacompra\CarroCompra;
     use Carrodelacompra\ProductoDB;
     use Carrodelacompra\LineaCarro;
@@ -21,7 +23,7 @@
         //Volvemos a serializar el carro con la nueva línea añadida
         $_SESSION['carrito'] = serialize($carro);
 
-        header('Location: ../index.php');
+        header("Location: ../index.php");
     }
 
 

@@ -37,6 +37,10 @@ use Carrodelacompra\Producto;
         $this->cantidad = $unaCantidad;
     }
 
+    public function incrementarCantidad(){
+        $this->cantidad++;
+    }
+
 
  }
 
