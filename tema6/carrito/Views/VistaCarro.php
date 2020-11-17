@@ -38,7 +38,7 @@ class VistaCarro {
                 </tr>";
         }
         echo "<tr class='text-right'>
-                    <td colspan='4'><strong>Total a pagar (IVA incl.) </strong></td>
+                    <td colspan='4'><strong>Total a pagar </strong></td>
                     <td><strong>" . $carro->getTotal() . " &euro;</strong></td>
                     <td></td>
                 </tr>";

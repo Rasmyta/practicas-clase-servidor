@@ -1,7 +1,6 @@
 <?php
 namespace Carrodelacompra;
 
-include_once("Producto.php");
 use Carrodelacompra\Producto;
 
 
@@ -39,6 +38,11 @@ use Carrodelacompra\Producto;
 
     public function incrementarCantidad(){
         $this->cantidad++;
+    }
+
+    public function decrementarCantidad(){
+        if ($this->cantidad > 1)
+            $this->cantidad--;
     }
 
     public function getSubTotal() {

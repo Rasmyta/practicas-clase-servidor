@@ -1,7 +1,6 @@
 <?php
 namespace Carrodelacompra;
 
-include_once("LineaCarro.php");
 use Carrodelacompra\LineaCarro;
 
 
@@ -53,10 +52,30 @@ class CarroCompra {
     public function getTotal() {
         $total=0;
         foreach($this->getLineasCarro() as $linea) {
-            $total += $linea->getSubtotalIVA();
+            $total += $linea->getSubtotal();
         }
 
         return $total;
+    }
+
+    //Eliminar línea del carro
+    public function eliminarLinea($id) {
+        foreach($this->lineasCarro as $key => $linea) {
+            if ($linea->getProducto()->getId() == $id) {
+                unset($this->lineasCarro[$key]);
+            }
+        }
+
+    }
+
+    //Prueba de método __toString() se ejecuta cuando se intenta tratar un objeto como cadena
+    public function __toString() {
+        $cadena="";
+        foreach($this->getLineasCarro() as $linea) {
+            $cadena .= $linea->getProducto()->getNombre() . " ";
+        }
+
+        return $cadena;
     }
 
 

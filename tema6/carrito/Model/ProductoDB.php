@@ -1,8 +1,6 @@
 <?php
 namespace Carrodelacompra;
 
-include_once('ConexionDB.php');
-include_once('Producto.php');
 use Carrodelacompra\Producto;
 use Carrodelacompra\ConexionDB;
 use \PDO;
