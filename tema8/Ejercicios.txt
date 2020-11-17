@@ -1,0 +1,5 @@
+- Cervezas sacadas de una API, mostrarlas, mvc y ajax
+- Películas sacadas de una API y añadir críticas en MongoDB.
+- Reservas el Guli pasarla a MongoDB
+- Ver ejemplo con un controlador con rutas .htaccess
+- Discos favoritos, con imagenes blob, mvc, ajax. Canciones que te gustan de ese disco.
