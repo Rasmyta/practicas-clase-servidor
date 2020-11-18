@@ -18,6 +18,5 @@ if (!isset($_SESSION['carrito'])) {
 $productos = ProductoDB::getProductos();
 VistaIndex::render($productos,$carro->count());
 
-echo $carro;
 
 ?>

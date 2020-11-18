@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="Incidencias Mongo">
+    <meta name="author" content="ProfeJJ">    
+    <title>El Tiempo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
+</head>
+<body>
+
+	<select id="ciudades" class='m-2'>
+		<option value="04620">Vera</option>
+		<option value="04638">Mojácar</option>
+		<option value="04610">Cuevas</option>
+		<option value="04630">Garrucha</option>
+	</select>
+	
+	<!-- Si lo querecemos hacer con botón en Jquery  
+		 habría que capturar $( '#tiempo' ).click(function(e) { ... 
+		
+		<button id="tiempo" class="btn btn-primary"	>Actualizar</button>
+	-->
+
+	<section id="principal" class='m-2'>
+	</section>
+
+
+<script src="./js/jquery-3.4.1.min.js"></script>
+
+<script>
+	//Script para consultar el tiempo por Ajax
+	$( '#ciudades' ).change(function(e) {
+		e.preventDefault();
+		//Llamada a apiweather.php por Ajax
+		$.ajax({
+			type: 'GET',
+			url: 'apiweather.php',
+			data: "zip=" + $('#ciudades option:selected').val(),
+			success: function(response) {
+				//El resultado lo metemos en el section principal
+				$("#principal").html(response);
+			}
+       	});
+
+	});
+
+
+</script>
+
+</body>
+</html>

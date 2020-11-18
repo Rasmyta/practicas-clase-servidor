@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="Incidencias Mongo">
+    <meta name="author" content="ProfeJJ">    
+    <title>El Tiempo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
+</head>
+<body>
+
+	<section class='m-2'>
+		<form id='fciudad'>
+		 	<div class="form-group w-25">
+				<label>Introduce ciudad para saber el tiempo que hace:</label>
+				<input type='text' name='ciudad' class="form-control">
+			</div>
+		 	<div class="form-group w-25">
+				<label>Introduce país donde buscar la ciudad en su idioma:</label>
+				<input type='text' name='pais' class="form-control" placeholder='es'>
+			</div>			
+			<div class="form-group w-25">
+				<button id="tiempo" class="btn btn-primary"	>Actualizar</button>
+			</div>
+		</form>
+	</section>
+
+	<section id="principal" class='m-2'>
+	</section>
+
+
+<script src="./js/jquery-3.4.1.min.js"></script>
+
+<script>
+	//Script para consultar el tiempo por Ajax
+	$( '#tiempo' ).click(function(e) {
+		e.preventDefault();
+		//Llamada a apiweather.php por Ajax
+		$.ajax({
+			type: 'POST',
+			url: 'apiweather.php',
+			data: $('#fciudad').serialize(),
+			success: function(response) {
+				//El resultado lo metemos en el section principal
+				$("#principal").html(response);
+			}
+       	});
+
+	});
+
+
+</script>
+
+</body>
+</html>
