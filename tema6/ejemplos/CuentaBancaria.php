@@ -102,10 +102,10 @@
 	final class CuentaJoven extends CuentaBancaria {		
 		private $comisionesModif;
 
-		public function __construct($unNumeroCuenta,$unSaldo) {
+		public function __construct($unNumeroCuenta,$unSaldo, $unComisionesModif=0) {
 			parent::__construct($unNumeroCuenta,$unSaldo);
 			$this->setTarjetaDebito(true);
-			$this->comisionesModif = 0;
+			$this->comisionesModif = $unComisionesModif;
 		}
 
 		public function getComisiones() {

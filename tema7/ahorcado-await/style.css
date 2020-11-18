@@ -1,0 +1,22 @@
+html[data-theme='dark'] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.invertFilter {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* This fixes and issue with child nodes inside the button being clickable */
+button>* {
+  pointer-events: none;
+}
+
+#theme-toggler {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}

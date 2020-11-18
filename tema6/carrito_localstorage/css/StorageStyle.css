@@ -1,0 +1,55 @@
+body {
+	font-family: Dosis, sans-serif;
+	background: url('../img/istockphoto-471165800-1024x1024.jpg');
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+header {
+	border: 1px dotted blue;
+	padding: 6px;
+	margin-right: 20px;
+	max-width: 1200px;
+}
+
+footer {
+	padding: 6px;
+	margin-right: 20px;
+	max-width: 1200px;
+	margin: 20px;
+}
+
+section {
+	padding: 6px;
+	margin-right: 20px;
+	max-width: 1200px;
+}
+
+td,th {
+	font-family: monospace;
+	padding: 4px;
+}
+
+label {
+	vertical-align: top;
+}
+
+article {
+	display: inline-block;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+
+#items_table {
+	border: 1px dotted blue;
+	padding: 6px;
+	margin-top: 12px;
+	margin-right: 50%;
+}
+
+#items_table h3 {
+	font-size: 18px;
+	margin-top: 0px;
+	font-family: sans-serif;
+}
