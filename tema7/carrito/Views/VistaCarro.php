@@ -24,7 +24,7 @@ class VistaCarro {
         foreach ($carro->getLineasCarro() as $linea) {
             $producto = $linea->getProducto();
             echo "<tr>
-                    <td><img style='width: 100px;' src='" . $producto->getImagen() . "'></td>
+                    <td><img style='width: 100px;' src='data:image/png;base64," . base64_encode($producto->getImagen()) . "'></td>
                     <td class='text-left'>" . $producto->getDescripcion() . "</td>
                     <td>" . $producto->getPrecio(). " &euro;</td>
                     <td><a href='#' onclick='cambiarCantidad(" . $producto->getId() . ",1)'><i class='fas fa-plus-square px-2'></i></a>" . $linea->getCantidad();

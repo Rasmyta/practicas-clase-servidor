@@ -14,7 +14,20 @@ if (!isset($_SESSION['carrito'])) {
     $carro = unserialize($_SESSION['carrito']);
 }
 
-        include_once("Views/_cabecera.php");
+		include_once("Views/_cabecera.php");
+		
+		//Recuperamos el carro de la sesión
+		if (!isset($_SESSION['carrito'])) {
+			$carro = new CarroCompra();
+			$_SESSION['carrito'] = serialize($carro);
+		} else {
+			$carro = unserialize($_SESSION['carrito']);
+		}
+
+		//Recuperar los productos de la BD como objetos
+		$productos = ProductoDB::getProductos();
+		VistaIndex::render($productos,$carro->count());
+				
 ?>    
 
         <section id="content">
@@ -26,23 +39,20 @@ if (!isset($_SESSION['carrito'])) {
 
 <script defer>
 	//Script para consultar los productos de la tienda
-	$(document).ready(function() {
-		inicio();
-	});
 
-	//Llamada ajax para mostrar la página de inicio con los productos de la tienda
-	function inicio() {
-		//Llamada a mostrar productos
+	$('#verCarro').click(function() {
+		alert('Hola');
 		$.ajax({
 			type: 'GET',
 			url: 'Controllers/controller.php',
-			data: "accion=mostrar",
+			data: "accion=mostrarCarro",
 			success: function(response) {
 				//El resultado lo metemos en el section principal
 				$("#content").html(response);
+				
 			}
-       	});
-	}
+		});		
+	});
 
 	//Script para pulsar el botón de comprar una vez mostrados los productos
 	function comprar(id) {

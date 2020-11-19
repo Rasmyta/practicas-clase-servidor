@@ -16,7 +16,7 @@ class VistaIndex {
                 <div class='col'>
                     <?php
                         echo "<a href='login.php' class='p-3'><i class='far fa-user'></i> MI CUENTA</a>
-                              <a href='#' onclick='verCarro()' class='p-3'><i class='fas fa-shopping-bag'></i> 
+                              <a href='#' id='verCarro' class='p-3'><i class='fas fa-shopping-bag'></i> 
                                 <span id='contador' class='bg-info text-white px-2 py-1 rounded-circle' style='font-size: 13px;'>".$count."</span>
                                 MI CESTA</a>";
                     ?>
@@ -62,7 +62,7 @@ class VistaIndex {
                     foreach ($productos as $item) {
                         echo "<div class='col mb-5'>
                                 <div class='card border-0' style='width: 18rem; height: 90%;'>
-                                    <img class='card-img-top' src='" . $item->getImagen() . "' alt='" . $item->getDescripcion() . "'>
+                                    <img class='card-img-top' src='data:image/png;base64," . base64_encode($item->getImagen()) . "' alt='" . $item->getDescripcion() . "'>
                                     <div class='card-body' style='height: 100%;'>
                                         <a href='#'><h5 class='card-title'>" .  $item->getDescripcion() . "</h5></a>
                                     </div>
