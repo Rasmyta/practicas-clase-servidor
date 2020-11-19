@@ -88,6 +88,7 @@
         //Recibimos la imagen y la guardamos
         if (isset($_FILES['imagen'])) {
             //Faltarían comprobaciones de la imagen
+            
             $imagen = $_FILES['imagen']['tmp_name'];
             $imagenBlob = file_get_contents($imagen);
         }
