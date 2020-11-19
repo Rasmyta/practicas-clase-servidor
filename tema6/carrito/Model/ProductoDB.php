@@ -33,9 +33,7 @@ class ProductoDB {
     public static function getProductoId($unId) {
 
         $consulta = "SELECT * FROM productos WHERE id = :id";
-
         $conexion = ConexionDB::conectar("tienda");
-
         try {
             $stmt = $conexion->prepare($consulta);
             $stmt->bindParam(":id",$unId);
@@ -48,7 +46,27 @@ class ProductoDB {
 
         ConexionDB::desconectar();
         return $resultado;
-        
+
+    }
+
+    //Insertar producto
+    public static function insertarProducto($nombre,$descripcion,$precio,$imagen,$iva) {
+        $conexion = ConexionDB::conectar("tienda");
+        $consulta = "INSERT INTO productos (nombre,descripcion,precio,imagen,iva) VALUES(";
+        $consulta .= ":nombre, :descripcion, :precio, :imagen, :iva)";
+        try {
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":nombre",$nombre);
+            $stmt->bindParam(":descripcion",$descripcion);
+            $stmt->bindParam(":precio",$precio);
+            $stmt->bindParam(":imagen",$imagen);
+            $stmt->bindParam(":iva",$iva);
+            $stmt->execute();
+        } catch (PDOException $e){
+		    echo $e->getMessage();
+        } 
+
+
 
     }
 
