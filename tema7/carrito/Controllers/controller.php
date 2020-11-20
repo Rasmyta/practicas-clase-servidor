@@ -80,20 +80,38 @@
 
        //Eliminar línea del carro
        if ($_GET['accion'] == 'deleteLinea') {
-        $id = $_GET['id'];
-        //Deserializamos el carro de la sesión para añadirle esa línea de carro
-        $carro = unserialize($_SESSION['carrito']);
-        $carro->eliminarLinea($id);
+            $id = $_GET['id'];
+            //Deserializamos el carro de la sesión para añadirle esa línea de carro
+            $carro = unserialize($_SESSION['carrito']);
+            $carro->eliminarLinea($id);
 
-        //Volvemos a serializar el carro con la nueva línea añadida
-        $_SESSION['carrito'] = serialize($carro);
-        //Pintamos el carro
-        VistaCarro::render($carro);
+            //Volvemos a serializar el carro con la nueva línea añadida
+            $_SESSION['carrito'] = serialize($carro);
+            //Pintamos el carro
+            VistaCarro::render($carro);
 
-    }   
+        }   
         
-        
 
+    }
+
+    if (isset($_POST['addProduct'])) {
+        $nombre = $_POST['nombre'];
+        $descripcion = $_POST['descripcion'];
+        $precio = $_POST['precio'];
+        $iva = $_POST['iva'];
+        $imagenBlob = "";
+
+        //Recibimos la imagen y la guardamos
+        if (isset($_FILES['imagen'])) {
+            //Faltarían comprobaciones de la imagen
+            
+            $imagen = $_FILES['imagen']['tmp_name'];
+            $imagenBlob = file_get_contents($imagen);
+        }
+
+        ProductoDB::insertarProducto($nombre,$descripcion,$precio,$imagenBlob,$iva);
+        header("Location: ../index.php");
     }
 
     

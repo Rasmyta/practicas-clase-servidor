@@ -67,7 +67,7 @@ class VistaIndex {
                                         <a href='#'><h5 class='card-title'>" .  $item->getDescripcion() . "</h5></a>
                                     </div>
                                     <p><b>" .  $item->getPrecio() . " &euro;</b></p>
-                                    <button type='submit' onclick='comprar(" .  $item->getId() . ")' class='btn btn-info'>COMPRAR</button>
+                                    <button type='submit' class='btn btn-primary comprar' id='" .  $item->getId() . "' class='btn btn-info'>COMPRAR</button>
                                 </div> 
                             </div>";
                     } 

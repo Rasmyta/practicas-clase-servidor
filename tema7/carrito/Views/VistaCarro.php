@@ -9,7 +9,7 @@ class VistaCarro {
         echo "<div class='text-center m-5'>
             <h4>MI CESTA</h4>
             </div>";
-        echo "<table class='table table-hover table-bordered col-9 mx-auto'>
+        echo "<table class='table table-bordered col-9 mx-auto'>
             <thead class='thead-dark text-center'>
                 <tr>
                     <th>PRODUCTO</th>
@@ -46,7 +46,7 @@ class VistaCarro {
 
         //botton para volver a index.php
         echo "<div class='text-center m-5'>
-                <a href='#' onclick='inicio()' class='btn btn-info m-3'><- Seguir comprando</a>
+                <a href='' id='inicio' class='btn btn-info m-3'><- Seguir comprando</a>
             </div>";
     }
 }

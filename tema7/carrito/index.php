@@ -24,24 +24,22 @@ if (!isset($_SESSION['carrito'])) {
 			$carro = unserialize($_SESSION['carrito']);
 		}
 
+		echo "<section id='content'>";
+
 		//Recuperar los productos de la BD como objetos
 		$productos = ProductoDB::getProductos();
 		VistaIndex::render($productos,$carro->count());
+
+		echo "</section>";
 				
 ?>    
 
-        <section id="content">
-
-        </section>
-
-
 <script src="js/jquery-3.4.1.min.js"></script>
 
-<script defer>
+<script>
 	//Script para consultar los productos de la tienda
 
 	$('#verCarro').click(function() {
-		alert('Hola');
 		$.ajax({
 			type: 'GET',
 			url: 'Controllers/controller.php',
@@ -54,33 +52,37 @@ if (!isset($_SESSION['carrito'])) {
 		});		
 	});
 
-	//Script para pulsar el botón de comprar una vez mostrados los productos
-	function comprar(id) {
+	$('#inicio').click(function() {
 		$.ajax({
 			type: 'GET',
 			url: 'Controllers/controller.php',
-			data: "accion=comprar&id=" + id,
-			success: function(response) {
-				//El resultado lo metemos en el section principal
-				$("#contador").html(response);
-				
-			}
-		});
-	}
-	
-	//Ajax para ver el carro
-	function verCarro (){
-		$.ajax({
-			type: 'GET',
-			url: 'Controllers/controller.php',
-			data: "accion=mostrarCarro",
+			data: "accion=mostrar",
 			success: function(response) {
 				//El resultado lo metemos en el section principal
 				$("#content").html(response);
 				
 			}
+		});		
+	});
+
+
+	//Script para pulsar el botón de comprar (para todos los botones) una vez mostrados los productos
+	$( ".comprar" ).each(function() {
+    	$(this).click( function(){
+		
+			id = $(this).attr('id');
+			$.ajax({
+				type: 'GET',
+				url: 'Controllers/controller.php',
+				data: "accion=comprar&id=" + id,
+				success: function(response) {
+					//El resultado lo metemos en el section principal
+					$("#contador").html(response);
+					
+				}
+			});
 		});
-	}
+	});
 
 	//Ajax para botón de más cantidad en el carro
 	function cambiarCantidad (productoId, tipo){
