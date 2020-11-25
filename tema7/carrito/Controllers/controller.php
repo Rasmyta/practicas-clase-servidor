@@ -18,10 +18,10 @@
     }
     
     //Acciones desde JQuery
-    if (isset($_GET['accion'])) {
+    if (isset($_REQUEST['accion'])) {
 
         //Mostrar productos de la tienda
-        if ($_GET['accion'] == 'mostrar') {
+        if ($_REQUEST['accion'] == 'mostrar') {
             //Recuperamos el carro de la sesión
             if (!isset($_SESSION['carrito'])) {
                 $carro = new CarroCompra();
@@ -36,9 +36,9 @@
         }
 
         //Añadir producto al carro
-        if ($_GET['accion'] == 'comprar') {      
+        if ($_REQUEST['accion'] == 'comprar') {      
             //Llamamos a BD para obtener el objeto producto con ese id
-            $producto = ProductoDB::getProductoId($_GET['id']);
+            $producto = ProductoDB::getProductoId($_REQUEST['id']);
             //Creamos una línea de carro con ese producto
             $lineaCarro = new LineaCarro($producto);
             //Deserializamos el carro de la sesión para añadirle esa línea de carro
@@ -53,13 +53,13 @@
         }    
         
         //Mostrar el carro
-        if ($_GET['accion'] == 'mostrarCarro') {
+        if ($_REQUEST['accion'] == 'mostrarCarro') {
             VistaCarro::render(unserialize($_SESSION['carrito']));
 
         }
 
         //Sumar/restar cantidad de un producto en el carro
-        if ($_GET['accion'] == 'cambiar') {
+        if ($_REQUEST['accion'] == 'cambiar') {
             $id = $_GET['id'];
             //Deserializamos el carro de la sesión para añadirle esa línea de carro
             $carro = unserialize($_SESSION['carrito']);
@@ -79,7 +79,7 @@
         }
 
        //Eliminar línea del carro
-       if ($_GET['accion'] == 'deleteLinea') {
+       if ($_REQUEST['accion'] == 'deleteLinea') {
             $id = $_GET['id'];
             //Deserializamos el carro de la sesión para añadirle esa línea de carro
             $carro = unserialize($_SESSION['carrito']);

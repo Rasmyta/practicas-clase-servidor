@@ -7,51 +7,30 @@ use Carrodelacompra\ProductoDB;
 use Carrodelacompra\VistaIndex;
 
 
-if (!isset($_SESSION['carrito'])) {
-    $carro = new CarroCompra();
-    $_SESSION['carrito'] = serialize($carro);
-} else {
-    $carro = unserialize($_SESSION['carrito']);
-}
+	if (!isset($_SESSION['carrito'])) {
+		$carro = new CarroCompra();
+		$_SESSION['carrito'] = serialize($carro);
+	} else {
+		$carro = unserialize($_SESSION['carrito']);
+	}
 
-		include_once("Views/_cabecera.php");
-		
-		//Recuperamos el carro de la sesión
-		if (!isset($_SESSION['carrito'])) {
-			$carro = new CarroCompra();
-			$_SESSION['carrito'] = serialize($carro);
-		} else {
-			$carro = unserialize($_SESSION['carrito']);
-		}
+	include_once("Views/_cabecera.php");
+	
+	echo "<section id='content'>";
 
-		echo "<section id='content'>";
+	//Recuperar los productos de la BD como objetos
+	$productos = ProductoDB::getProductos();
+	VistaIndex::render($productos,$carro->count());
 
-		//Recuperar los productos de la BD como objetos
-		$productos = ProductoDB::getProductos();
-		VistaIndex::render($productos,$carro->count());
-
-		echo "</section>";
+	echo "</section>";
 				
 ?>    
 
 <script src="js/jquery-3.4.1.min.js"></script>
 
 <script>
+/*
 	//Script para consultar los productos de la tienda
-
-	$('#verCarro').click(function() {
-		$.ajax({
-			type: 'GET',
-			url: 'Controllers/controller.php',
-			data: "accion=mostrarCarro",
-			success: function(response) {
-				//El resultado lo metemos en el section principal
-				$("#content").html(response);
-				
-			}
-		});		
-	});
-
 	$('#inicio').click(function() {
 		$.ajax({
 			type: 'GET',
@@ -64,22 +43,46 @@ if (!isset($_SESSION['carrito'])) {
 			}
 		});		
 	});
+*/
+
+/*
+	//Ajax de mostrar productos con get
+	$(document).ready( function() {
+		$.get("Controllers/controller.php",{ accion : "mostrar"},function(respuesta) {
+			$("#content").html(respuesta);
+		});
+	});
+*/
+
+/*
+	//Ajax de mostrar el carro con get
+	$('#verCarro').click(function() {
+		$.get("Controllers/controller.php",{ accion : "mostrarCarro"},function(respuesta) {
+			$("#content").html(respuesta);
+		});	
+	});
+*/
+
+/*
+	//Ajax de mostrar el carro con load
+	$('#verCarro').click(function() {
+		$("#content").load("Controllers/controller.php",{accion : "mostrarCarro"});
+	});
+*/
+	$('#verCarro').click(function() {
+		$.get("Controllers/controller.php",{ accion : "mostrarCarro"},function(respuesta) {
+			$("#content").html(respuesta);
+		});
+	});
 
 
 	//Script para pulsar el botón de comprar (para todos los botones) una vez mostrados los productos
 	$( ".comprar" ).each(function() {
     	$(this).click( function(){
-		
-			id = $(this).attr('id');
-			$.ajax({
-				type: 'GET',
-				url: 'Controllers/controller.php',
-				data: "accion=comprar&id=" + id,
-				success: function(response) {
-					//El resultado lo metemos en el section principal
+			var unId = $(this).attr('id');
+			var parametros = { accion: "comprar", id: unId };
+			$.post("Controllers/controller.php",parametros, function(response) {
 					$("#contador").html(response);
-					
-				}
 			});
 		});
 	});
@@ -97,6 +100,7 @@ if (!isset($_SESSION['carrito'])) {
 		});
 	}
 
+
 	//Ajax para borrar una línea del carro
 	function deleteLinea (productoId){
 		$.ajax({
@@ -109,6 +113,10 @@ if (!isset($_SESSION['carrito'])) {
 			}
 		});
 	}	
+
+	function inicio() {
+		$("#content").load("Controllers/controller.php",{accion : "mostrar"});
+	}
 
 </script>
 

@@ -46,7 +46,7 @@ class VistaCarro {
 
         //botton para volver a index.php
         echo "<div class='text-center m-5'>
-                <a href='' id='inicio' class='btn btn-info m-3'><- Seguir comprando</a>
+                <a href='#' onclick='inicio()' class='btn btn-info m-3'><- Seguir comprando</a>
             </div>";
     }
 }
