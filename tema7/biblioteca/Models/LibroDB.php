@@ -45,6 +45,31 @@ class LibroDB {
         ConexionDB::desconectar();        
     }
 
+    //Inserta un nuevo libro
+    public static function insertBook($titulo,$subtitulo,$descripcion,$autor,$editorial,$imagen,$numejem,$numejemdisp) {
+
+        $consulta = "INSERT INTO libros (titulo,subtitulo,descripcion,autor,editorial,imagen,numejem,numejemdisp) VALUES (:titulo, :subtitulo, :descripcion, :autor, :editorial, :imagen, :numejem, :numejemdisp)";
+        $conexion = ConexionDB::conectar("biblioteca");
+
+        try {
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":titulo",$titulo);
+            $stmt->bindParam(":subtitulo",$subtitulo);
+            $stmt->bindParam(":descripcion",$descripcion);
+            $stmt->bindParam(":autor",$autor);
+            $stmt->bindParam(":editorial",$editorial);
+            $stmt->bindParam(":imagen",$imagen);
+            $stmt->bindParam(":numejem",$numejem);
+            $stmt->bindParam(":numejemdisp",$numejemdisp);
+            $stmt->execute();
+        } catch (PDOException $e){
+		    echo $e->getMessage();
+        }  
+          
+        ConexionDB::desconectar();  
+
+    }
+
 
 
 }

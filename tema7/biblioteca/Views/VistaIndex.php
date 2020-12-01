@@ -42,11 +42,12 @@ class VistaIndex {
     }
 
 ?>
- 
+
+
    </tbody>
  </table>
 
-
+ 
 <?php
         
         

@@ -18,6 +18,13 @@
             $libros = LibroDB::getLibros();
             VistaIndex::render($libros);
        }
+
+       if ($_POST['action'] == "newBook") {
+           LibroDB::insertBook($_POST['titulo'],$_POST['subtitulo'],$_POST['descripcion'],$_POST['autor'],$_POST['editorial'],$_POST['imagen'], $_POST["numejem"],$_POST["numejemdisp"]);
+           $libros = LibroDB::getLibros();
+           VistaIndex::render($libros);
+       }
+
     }
 
 
