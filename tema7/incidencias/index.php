@@ -85,6 +85,7 @@ include_once("autoload.php");
 
 	document.getElementById('nuevaIncidencia').addEventListener("click", function() {
 		$('#formularioInsertar').show();
+		document.getElementById("mensaje").innerHTML = "";
 	});
 
 	//Botón del formulario para insertar incidencia
@@ -105,6 +106,7 @@ include_once("autoload.php");
 		let data = await res.text();
 
 		//Pintamos la respuesta en el contenedor
+		$('#formularioInsertar').hide();
 		document.getElementById("mensaje").innerHTML = data;
 
 	});

@@ -11,7 +11,7 @@ class IncidenciaDB {
     //Inserta incidencia
     public static function insertInc($latitud,$longitud,$ciudad,$direccion,$etiqueta,$descripcion,$id_cliente) {
 
-        $consulta = "INSERT INTO libros (latitud,longitud,ciudad,direccion,etiqueta,descripcion,estado,id_cliente) VALUES (:latitud, :longitud, :ciudad, :direccion, :etiqueta, :descripcion, 'abierta', :id_cliente)";
+        $consulta = "INSERT INTO incidencias (latitud,longitud,ciudad,direccion,etiqueta,descripcion,estado,id_cliente) VALUES (:latitud, :longitud, :ciudad, :direccion, :etiqueta, :descripcion, 'abierta', :id_cliente)";
         $conexion = ConexionDB::conectar("incidencias");
 
         try {
@@ -21,7 +21,7 @@ class IncidenciaDB {
             $stmt->bindParam(":ciudad",$ciudad);
             $stmt->bindParam(":direccion",$direccion);
             $stmt->bindParam(":etiqueta",$etiqueta);
-            $stmt->bindParam(":descripcion",$descipcion);
+            $stmt->bindParam(":descripcion",$descripcion);
             $stmt->bindParam(":id_cliente",$id_cliente);
             $stmt->execute();
         } catch (PDOException $e){

@@ -11,10 +11,11 @@ namespace Incidencias;
     private $etiqueta;
     private $descripcion;
     private $estado;
+    private $idCliente;
 
 
     //Constructor
-    public function __construct($id=0,$latitud="", $longitud="", $ciudad="", $direccion="", $etiqueta="", $descripcion="", $estado="abierta") {
+    public function __construct($id=0,$latitud="", $longitud="", $ciudad="", $direccion="", $etiqueta="", $descripcion="", $estado="abierta", $idCliente=0) {
         $this->id = $id;
         $this->latitud = $latitud;
         $this->longitud = $longitud;
@@ -22,7 +23,8 @@ namespace Incidencias;
         $this->direccion = $direccion;
         $this->etiqueta = $etiqueta;
         $this->descripcion = $descripcion;
-        $this->estado = $estado;        
+        $this->estado = $estado;    
+        $this->idCliente = $idCliente;    
     }
     
 
@@ -187,6 +189,27 @@ namespace Incidencias;
 
         return $this;
     }
+
+    /**
+     * Get the value of idCliente
+     */ 
+    public function getIdCliente()
+    {
+        return $this->idCliente;
+    }
+
+    /**
+     * Set the value of idCliente
+     *
+     * @return  self
+     */ 
+    public function setIdcliente($idCliente)
+    {
+        $this->idCliente = $idCliente;
+
+        return $this;
+    }
+
  }
 
 

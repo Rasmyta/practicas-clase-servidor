@@ -18,7 +18,8 @@ class ClienteDB {
             $stmt = $conexion->prepare($consulta);
             $stmt->bindParam(":movil",$movil);
             $stmt->execute();
-            $resultado = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "Incidencias\Cliente");
+            $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Incidencias\Cliente");
+            $resultado = $stmt->fetch();
         } catch (PDOException $e){
 		    echo $e->getMessage();
         }  
