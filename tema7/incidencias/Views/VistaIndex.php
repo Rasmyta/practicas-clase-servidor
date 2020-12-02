@@ -1,5 +1,5 @@
 <?php
-namespace Biblioteca;
+namespace Incidencias;
 
 class VistaIndex {
 

@@ -2,6 +2,8 @@
     include_once("../autoload.php");
     use Incidencias\IncidenciaDB;
     use Incidencias\ClienteDB;
+    use Incidencias\VistaCliente;
+    use Incidencias\VistaIncidencia;
 
     //Acción de cargar los libros en la página principal
     if (isset($_POST['action'])) {
@@ -21,6 +23,25 @@
                 }
             }
        }
+
+       /**
+        * 
+        *    MÓDULO ADMIN
+        *********************************************************
+        *
+        */
+
+        //Ver clientes
+        if ($_POST['action'] == 'verclientes') {
+            $clientes = ClienteDB::getClientes();
+            VistaCliente::renderClientes($clientes);
+        }
+
+        //Ver incidencias
+        if ($_POST['action'] == 'verincidencias') {
+            $incidencias = IncidenciaDB::getIncidencias();
+            VistaIncidencia::renderIncidencias($incidencias);
+        }
 
     }
 

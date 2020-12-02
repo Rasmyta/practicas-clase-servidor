@@ -32,6 +32,25 @@ class IncidenciaDB {
 
     }
 
+    //Ver incidencias
+    public static function getIncidencias() {
+        $consulta = "SELECT * FROM Incidencias";
+
+        $conexion = ConexionDB::conectar("incidencias");
+
+        try {
+            $stmt = $conexion->prepare($consulta);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Incidencias\Incidencia");
+            $resultado = $stmt->fetchAll();
+        } catch (PDOException $e){
+		    echo $e->getMessage();
+        }  
+          
+        ConexionDB::desconectar();
+        return $resultado;
+    }
+
 
 
 }

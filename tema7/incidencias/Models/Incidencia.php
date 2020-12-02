@@ -15,7 +15,7 @@ namespace Incidencias;
 
 
     //Constructor
-    public function __construct($id=0,$latitud="", $longitud="", $ciudad="", $direccion="", $etiqueta="", $descripcion="", $estado="abierta", $idCliente=0) {
+    public function __construct($id=0,$latitud="", $longitud="", $ciudad="", $direccion="", $etiqueta="", $descripcion="", $estado="", $idCliente=0) {
         $this->id = $id;
         $this->latitud = $latitud;
         $this->longitud = $longitud;
