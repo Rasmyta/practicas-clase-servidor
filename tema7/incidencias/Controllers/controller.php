@@ -53,7 +53,21 @@
             IncidenciaDB::newIncidencia($_POST);
             $incidencias = IncidenciaDB::getIncidencias();
             VistaIncidencia::renderIncidencias($incidencias);
-        }   
+        }  
+        
+        //Acción de borrar incidencia
+        if ($_POST['action'] == 'deleteincidencia') {
+            IncidenciaDB::deleteIncidencia($_POST['id']);
+            $incidencias = IncidenciaDB::getIncidencias();
+            VistaIncidencia::renderIncidencias($incidencias);
+        } 
+
+        //Acción de borrar cliente
+        if ($_POST['action'] == 'deletecliente') {
+            ClienteDB::deleteCliente($_POST['id']);
+            $clientes = ClienteDB::getClientes();
+            VistaCliente::renderClientes($clientes);
+        }         
 
     }
 

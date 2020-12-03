@@ -47,6 +47,22 @@ class ClienteDB {
         return $resultado;
     }
 
+    
+    //Borrar cliente
+    public static function deleteCliente($id) {
+        $consulta = "DELETE FROM clientes WHERE id=:id";
+        $conexion = ConexionDB::conectar("incidencias");
+
+        try {
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":id",$id);
+            $stmt->execute();            
+        } catch (PDOException $e){
+		    echo $e->getMessage();
+        }  
+          
+        ConexionDB::desconectar();
+    }
 
 
 }

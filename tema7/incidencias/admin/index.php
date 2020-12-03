@@ -212,29 +212,104 @@
             let data = await res.text();
 
             //Pintamos la respuesta en el contenedor
-            document.getElementById("contenido").innerHTML = data;       
+            document.getElementById("contenido").innerHTML = data;    
+
+            $('#tabla').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });               
         });
 
         //BOTÓN CREAR INCIDENCIA
         document.getElementById("contenido").addEventListener("click", async function(e)  {
-		if (e.target.closest("button[action=insert]")) {
-            document.getElementById("formincidencia").addEventListener("submit", async function(e2) {
-		        e2.preventDefault(); //Para que no envíe el formulario antes
+          if (e.target.closest("button[action=insert]")) {
+                  document.getElementById("formincidencia").addEventListener("submit", async function(e2) {
+                  e2.preventDefault(); //Para que no envíe el formulario antes
 
-                let formData = new FormData(e2.target);
-                formData.append("action", "insertincidencia"); //Acción al controlador para insertar
+                      let formData = new FormData(e2.target);
+                      formData.append("action", "insertincidencia"); //Acción al controlador para insertar
 
-                let res = await fetch("../Controllers/controller.php", {
-                    method: "POST",
-                    body: formData,
-                });
-                let data = await res.text();
+                      let res = await fetch("../Controllers/controller.php", {
+                          method: "POST",
+                          body: formData,
+                      });
+                      let data = await res.text();
 
-                //Pintamos la respuesta en el contenedor
-                document.getElementById("contenido").innerHTML = data;
-            });        
-    	}
-	});        
+                      //Pintamos la respuesta en el contenedor
+                      document.getElementById("contenido").innerHTML = data;
+
+                      $('#tabla').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });                      
+                  });        
+          }
+        });  
+
+        //BOTÓN BORRAR INCIDENCIA
+        document.getElementById("contenido").addEventListener("click", async function(e)  {
+          let link = e.target.closest("a[id=deleteincidencia]");
+          if (link) {
+            let formData = new FormData();
+            formData.append("action", "deleteincidencia");
+            formData.append("id",link.getAttribute('idincidencia'));
+            let res = await fetch("../Controllers/controller.php", {
+                method: "POST",
+                body: formData,
+            });
+            let data = await res.text();
+            //Pintamos la respuesta en el contenedor
+            document.getElementById("contenido").innerHTML = data; 
+
+            $('#tabla').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+
+          }
+        });    
+
+        //BOTÓN BORRAR CLIENTE
+        document.getElementById("contenido").addEventListener("click", async function(e)  {
+          let link = e.target.closest("a[id=deletecliente]");
+          if (link) {
+            let formData = new FormData();
+            formData.append("action", "deletecliente");
+            formData.append("id",link.getAttribute('idcliente'));
+            let res = await fetch("../Controllers/controller.php", {
+                method: "POST",
+                body: formData,
+            });
+            let data = await res.text();
+            //Pintamos la respuesta en el contenedor
+            document.getElementById("contenido").innerHTML = data; 
+
+            $('#tabla').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });            
+          }
+        });                    
 
 
     </script>

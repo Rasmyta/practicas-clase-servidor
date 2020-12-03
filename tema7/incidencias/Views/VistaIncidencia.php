@@ -53,7 +53,7 @@ class VistaIncidencia {
         echo "<td>".$incidencia->getEstado()."</td>";
         echo "<td>".$incidencia->getIdCliente()."</td>";
         echo "<td>";
-        echo "<a class='text-danger ml-2'><i class='fas fa-trash-alt'></i></a>";
+        echo "<a class='text-danger ml-2' id='deleteincidencia' idincidencia='".$incidencia->getId()."'><i class='fas fa-trash-alt'></i></a>";
         echo "<a class='text-warning ml-2'><i class='fas fa-pencil-alt'></i></a>";
         echo "<a class='text-primary ml-2'><i class='fas fa-map-marked-alt'></i></a>";
         echo "</td>";

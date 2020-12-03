@@ -54,7 +54,7 @@ class IncidenciaDB {
     //Insertar incidencia
     public static function newIncidencia($post) {
 
-        //Quitamos action de $post
+        //Quitamos action de $post si se manda con Ajax una acción
         array_pop($post);
 
         $consulta = "INSERT INTO incidencias (";
@@ -87,6 +87,22 @@ class IncidenciaDB {
         ConexionDB::desconectar(); 
 
 
+    }
+
+    //Borrar incidencia
+    public static function deleteIncidencia($id) {
+        $consulta = "DELETE FROM incidencias WHERE id=:id";
+        $conexion = ConexionDB::conectar("incidencias");
+
+        try {
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":id",$id);
+            $stmt->execute();            
+        } catch (PDOException $e){
+		    echo $e->getMessage();
+        }  
+          
+        ConexionDB::desconectar();
     }
 
 

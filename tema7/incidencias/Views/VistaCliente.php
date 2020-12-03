@@ -6,7 +6,7 @@ class VistaCliente {
     public static function renderClientes($clientes) {
 ?>
 <!-- Content Header (Page header) -->
-<section class="content-header">
+    <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -19,7 +19,7 @@ class VistaCliente {
     <!-- Main content -->
     <section class="content">
 
-    <div class="container-fluid">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
@@ -47,7 +47,7 @@ class VistaCliente {
         echo "<td>".$cliente->getMovil()."</td>";
         echo "<td>".$cliente->getDNI()."</td>"; 
         echo "<td>";
-        echo "<a class='text-danger ml-2'><i class='fas fa-trash-alt'></i></a>";
+        echo "<a class='text-danger ml-2' id='deletecliente' idcliente='".$cliente->getId()."'><i class='fas fa-trash-alt'></i></a>";
         echo "</td>";        
         echo "</tr>";
     }
