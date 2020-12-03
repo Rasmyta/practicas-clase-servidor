@@ -11,7 +11,7 @@ namespace Incidencias;
     private $etiqueta;
     private $descripcion;
     private $estado;
-    private $idCliente;
+    private $id_cliente;
 
 
     //Constructor
@@ -24,7 +24,7 @@ namespace Incidencias;
         $this->etiqueta = $etiqueta;
         $this->descripcion = $descripcion;
         $this->estado = $estado;    
-        $this->idCliente = $idCliente;    
+        $this->id_cliente = $idCliente;    
     }
     
 
@@ -195,7 +195,7 @@ namespace Incidencias;
      */ 
     public function getIdCliente()
     {
-        return $this->idCliente;
+        return $this->id_cliente;
     }
 
     /**
@@ -205,7 +205,7 @@ namespace Incidencias;
      */ 
     public function setIdcliente($idCliente)
     {
-        $this->idCliente = $idCliente;
+        $this->id_cliente = $idCliente;
 
         return $this;
     }

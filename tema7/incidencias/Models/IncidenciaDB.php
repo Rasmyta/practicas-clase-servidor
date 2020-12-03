@@ -34,7 +34,7 @@ class IncidenciaDB {
 
     //Ver incidencias
     public static function getIncidencias() {
-        $consulta = "SELECT * FROM Incidencias";
+        $consulta = "SELECT * FROM incidencias";
 
         $conexion = ConexionDB::conectar("incidencias");
 
@@ -49,6 +49,44 @@ class IncidenciaDB {
           
         ConexionDB::desconectar();
         return $resultado;
+    }
+
+    //Insertar incidencia
+    public static function newIncidencia($post) {
+
+        //Quitamos action de $post
+        array_pop($post);
+
+        $consulta = "INSERT INTO incidencias (";
+        foreach($post as $key => $value) {
+            $consulta .= $key.", ";
+        }
+        $consulta = substr($consulta, 0, -2); //Quitamos última coma y el espacio
+        $consulta .= ") VALUES (";
+        foreach($post as $key => $value) {
+            $consulta .= ":".$key.", ";
+        }
+        $consulta = substr($consulta, 0, -2); //Quitamos última coma y el espacio
+        $consulta .= ");";
+
+        $conexion = ConexionDB::conectar("incidencias");
+
+        try {
+            $stmt = $conexion->prepare($consulta);
+
+            foreach($post as $key => $value) {
+                $param = ":".$key;
+                $stmt->bindValue($param,$value); //Ojo aquí que es bindValue
+            }
+
+            $stmt->execute();
+        } catch (PDOException $e){
+		    echo $e->getMessage();
+        }  
+          
+        ConexionDB::desconectar(); 
+
+
     }
 
 

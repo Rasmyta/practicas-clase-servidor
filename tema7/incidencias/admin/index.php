@@ -94,7 +94,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" id='nuevaincidencia'>
                   <i class="far fa-circle nav-icon"></i>
                   <p>Nueva</p>
                 </a>
@@ -111,7 +111,7 @@
 
 
  <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper" id='contenido'>
+<div class="content-wrapper" id='contenido'>
    
  
 </div>
@@ -150,6 +150,7 @@
 
 
     <script>
+        //VER CLIENTES
         document.getElementById('verclientes').addEventListener("click", async function() {
             let formData = new FormData();
             formData.append("action", "verclientes"); //Acción al controlador para verclientes
@@ -174,6 +175,7 @@
             });
         });
 
+        //VER INCIDENCIAS
         document.getElementById('verincidencias').addEventListener("click", async function() {
             let formData = new FormData();
             formData.append("action", "verincidencias"); //Acción al controlador para verclientes
@@ -198,7 +200,43 @@
             });
         });        
 
-       
+        //NUEVA INCIDENCIA
+        document.getElementById('nuevaincidencia').addEventListener("click", async function() {
+            let formData = new FormData();
+            formData.append("action", "nuevaincidencia"); //Acción al controlador para verclientes
+
+            let res = await fetch("../Controllers/controller.php", {
+                method: "POST",
+                body: formData,
+            });
+            let data = await res.text();
+
+            //Pintamos la respuesta en el contenedor
+            document.getElementById("contenido").innerHTML = data;       
+        });
+
+        //BOTÓN CREAR INCIDENCIA
+        document.getElementById("contenido").addEventListener("click", async function(e)  {
+		if (e.target.closest("button[action=insert]")) {
+            document.getElementById("formincidencia").addEventListener("submit", async function(e2) {
+		        e2.preventDefault(); //Para que no envíe el formulario antes
+
+                let formData = new FormData(e2.target);
+                formData.append("action", "insertincidencia"); //Acción al controlador para insertar
+
+                let res = await fetch("../Controllers/controller.php", {
+                    method: "POST",
+                    body: formData,
+                });
+                let data = await res.text();
+
+                //Pintamos la respuesta en el contenedor
+                document.getElementById("contenido").innerHTML = data;
+            });        
+    	}
+	});        
+
+
     </script>
 
   </body>

@@ -33,6 +33,7 @@ class VistaCliente {
                     <th>Localidad</th>
                     <th>Móvil</th>
                     <th>DNI</th>
+                    <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -45,6 +46,9 @@ class VistaCliente {
         echo "<td>".$cliente->getLocalidad()."</td>";
         echo "<td>".$cliente->getMovil()."</td>";
         echo "<td>".$cliente->getDNI()."</td>"; 
+        echo "<td>";
+        echo "<a class='text-danger ml-2'><i class='fas fa-trash-alt'></i></a>";
+        echo "</td>";        
         echo "</tr>";
     }
 

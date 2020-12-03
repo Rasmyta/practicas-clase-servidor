@@ -43,6 +43,18 @@
             VistaIncidencia::renderIncidencias($incidencias);
         }
 
+        //Formulario nueva incidencia
+        if ($_POST['action'] == 'nuevaincidencia') {
+            VistaIncidencia::renderFormNuevaIncidencia();
+        }
+
+        //Acción de insertar incidencia
+        if ($_POST['action'] == 'insertincidencia') {
+            IncidenciaDB::newIncidencia($_POST);
+            $incidencias = IncidenciaDB::getIncidencias();
+            VistaIncidencia::renderIncidencias($incidencias);
+        }   
+
     }
 
 
