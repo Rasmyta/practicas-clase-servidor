@@ -54,8 +54,8 @@ class VistaIncidencia {
         echo "<td>".$incidencia->getIdCliente()."</td>";
         echo "<td>";
         echo "<a class='text-danger ml-2' id='deleteincidencia' idincidencia='".$incidencia->getId()."'><i class='fas fa-trash-alt'></i></a>";
-        echo "<a class='text-warning ml-2'><i class='fas fa-pencil-alt'></i></a>";
-        echo "<a class='text-primary ml-2'><i class='fas fa-map-marked-alt'></i></a>";
+        echo "<a class='text-warning ml-2' id='updateincidencia' idincidencia='".$incidencia->getId()."' estado='".$incidencia->getEstado()."'><i class='fas fa-pencil-alt'></i></a>";
+        echo "<a class='text-primary ml-2' id='vermapa' etiqueta='".$incidencia->getEtiqueta()."' longitud='".$incidencia->getLongitud()."' latitud='".$incidencia->getLatitud()."'><i class='fas fa-map-marked-alt'></i></a>";
         echo "</td>";
         echo "</tr>";
     }
@@ -143,7 +143,7 @@ class VistaIncidencia {
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-info" action='insert'>Crear</button>
+                  <button type="submit" class="btn btn-info" action='insertinc'>Crear</button>
                 </div>
                 <!-- /.card-footer -->
               </form>

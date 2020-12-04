@@ -85,8 +85,6 @@ class IncidenciaDB {
         }  
           
         ConexionDB::desconectar(); 
-
-
     }
 
     //Borrar incidencia
@@ -104,6 +102,23 @@ class IncidenciaDB {
           
         ConexionDB::desconectar();
     }
+
+    //Update incidencia
+    public static function updateIncidencia($estado,$id) {
+        $consulta = "UPDATE incidencias SET estado=:estado WHERE id=:id";
+        $conexion = ConexionDB::conectar("incidencias");
+
+        try {
+            $stmt = $conexion->prepare($consulta);
+            $stmt->bindParam(":estado",$estado);
+            $stmt->bindParam(":id",$id);
+            $stmt->execute();            
+        } catch (PDOException $e){
+		    echo $e->getMessage();
+        }  
+          
+        ConexionDB::desconectar();
+    } 
 
 
 

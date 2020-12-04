@@ -70,7 +70,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" id="nuevocliente">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Nuevo</p>
                 </a>
@@ -128,6 +128,62 @@
   <!-- /.control-sidebar -->
 </div>
 
+<!-- Modal para modifican incidencia -->
+<div id="updateincidenciamodal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-info">Modificar incidencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Estado:</p>
+        <div class="form-group">
+  <form id='formupdateincidencia' method='post'>
+          <select class='form-control' id='selecEstado' name='estado'>
+            <option value='abierta'>Abierta</option>
+            <option value='enproceso'>En proceso</option>
+            <option value="cerrada">Cerrada</option>
+          </select>
+          <input type='hidden' id='idIncidencia' name='id' value="">
+          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" action='updateinc'>Modificar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin modal modificar incidencia -->
+
+<!-- Modal para ver en mapa la incidencia -->
+<div id="mapaincidenciamodal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-info">Localizar incidencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id='googleMap' style="width:100%;height:400px;>
+        
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin modal modificar incidencia -->
+
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -145,6 +201,7 @@
 <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 
@@ -164,15 +221,9 @@
             //Pintamos la respuesta en el contenedor
             document.getElementById("contenido").innerHTML = data;
 
-            $('#tabla').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+            //Que la tabla coja los estilos
+            $('#tabla').DataTable({"paging": true,"lengthChange": false,"searching": false,"ordering": true,"info": true,"autoWidth": false,"responsive": true,});
+
         });
 
         //VER INCIDENCIAS
@@ -189,15 +240,9 @@
             //Pintamos la respuesta en el contenedor
             document.getElementById("contenido").innerHTML = data;
 
-            $('#tabla').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+            //Que la tabla coja los estilos
+            $('#tabla').DataTable({"paging": true,"lengthChange": false,"searching": false,"ordering": true,"info": true,"autoWidth": false,"responsive": true,});
+
         });        
 
         //NUEVA INCIDENCIA
@@ -212,24 +257,29 @@
             let data = await res.text();
 
             //Pintamos la respuesta en el contenedor
-            document.getElementById("contenido").innerHTML = data;    
-
-            $('#tabla').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });               
+            document.getElementById("contenido").innerHTML = data;                  
         });
 
-        //BOTÓN CREAR INCIDENCIA
+        //NUEVO CLIENTE
+        document.getElementById('nuevocliente').addEventListener("click", async function() {
+            let formData = new FormData();
+            formData.append("action", "nuevocliente"); //Acción al controlador para verclientes
+
+            let res = await fetch("../Controllers/controller.php", {
+                method: "POST",
+                body: formData,
+            });
+            let data = await res.text();
+
+            //Pintamos la respuesta en el contenedor
+            document.getElementById("contenido").innerHTML = data;               
+        });        
+
+        //BOTÓN CREAR INCIDENCIA Y CREAR CLIENTE
         document.getElementById("contenido").addEventListener("click", async function(e)  {
-          if (e.target.closest("button[action=insert]")) {
+          if (e.target.closest("button[action=insertinc]")) {
                   document.getElementById("formincidencia").addEventListener("submit", async function(e2) {
-                  e2.preventDefault(); //Para que no envíe el formulario antes
+                      e2.preventDefault(); //Para que no envíe el formulario antes
 
                       let formData = new FormData(e2.target);
                       formData.append("action", "insertincidencia"); //Acción al controlador para insertar
@@ -243,18 +293,33 @@
                       //Pintamos la respuesta en el contenedor
                       document.getElementById("contenido").innerHTML = data;
 
-                      $('#tabla').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "searching": false,
-                        "ordering": true,
-                        "info": true,
-                        "autoWidth": false,
-                        "responsive": true,
-                    });                      
+                      //Que la tabla coja los estilos
+                      $('#tabla').DataTable({"paging": true,"lengthChange": false,"searching": false,"ordering": true,"info": true,"autoWidth": false,"responsive": true,});
+                     
                   });        
           }
+
+          if (e.target.closest("button[action=insertcli]")) {
+                  document.getElementById("formcliente").addEventListener("submit", async function(e2) {
+                      e2.preventDefault(); //Para que no envíe el formulario antes
+
+                      let formData = new FormData(e2.target);
+                      formData.append("action", "insertcliente"); //Acción al controlador para insertar
+
+                      let res = await fetch("../Controllers/controller.php", {
+                          method: "POST",
+                          body: formData,
+                      });
+                      let data = await res.text();
+
+                      //Pintamos la respuesta en el contenedor
+                      document.getElementById("contenido").innerHTML = data;
+                      //Que la tabla coja los estilos
+                      $('#tabla').DataTable({"paging": true,"lengthChange": false,"searching": false,"ordering": true,"info": true,"autoWidth": false,"responsive": true,});
+                  });        
+          }          
         });  
+
 
         //BOTÓN BORRAR INCIDENCIA
         document.getElementById("contenido").addEventListener("click", async function(e)  {
@@ -271,15 +336,8 @@
             //Pintamos la respuesta en el contenedor
             document.getElementById("contenido").innerHTML = data; 
 
-            $('#tabla').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+            //Que la tabla coja los estilos
+            $('#tabla').DataTable({"paging": true,"lengthChange": false,"searching": false,"ordering": true,"info": true,"autoWidth": false,"responsive": true,});
 
           }
         });    
@@ -299,20 +357,78 @@
             //Pintamos la respuesta en el contenedor
             document.getElementById("contenido").innerHTML = data; 
 
-            $('#tabla').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });            
+            //Que la tabla coja los estilos
+            $('#tabla').DataTable({"paging": true,"lengthChange": false,"searching": false,"ordering": true,"info": true,"autoWidth": false,"responsive": true,});
+
           }
         });                    
 
+        //BOTÓN UPDATE INCIDENCIA ABRIR FORM
+        document.getElementById("contenido").addEventListener("click", async function(e)  {
+          let link = e.target.closest("a[id=updateincidencia]");
+          if (link) {
+            $('#updateincidenciamodal').modal('show');
+
+            //Cargo en el modal el estado y el identificador de la incidencia
+            var modal = $('#updateincidenciamodal');
+            modal.find('#selecEstado').val(link.getAttribute('estado'));
+            modal.find('#idIncidencia').val(link.getAttribute('idincidencia'));
+          }
+        }); 
+
+        //BOTÓN UPDATE ESTADO INCIDENCIA EN EL MODAL
+        document.getElementById("formupdateincidencia").addEventListener("submit", async function(e) {
+            console.log('updateincidencia');
+            e.preventDefault(); //Para que no envíe el formulario antes
+
+            let formData = new FormData(e.target);
+            formData.append("action", "updateincidencia"); //Acción al controlador para insertar
+
+            let res = await fetch("../Controllers/controller.php", {
+                method: "POST",
+                body: formData,
+            });
+            let data = await res.text(); 
+            $('#updateincidenciamodal').modal('hide');
+            document.getElementById("contenido").innerHTML = data; 
+
+            //Que la tabla coja los estilos
+            $('#tabla').DataTable({"paging": true,"lengthChange": false,"searching": false,"ordering": true,"info": true,"autoWidth": false,"responsive": true,});
+        });   
+               
+        //BOTÓN VER MAPA
+        document.getElementById("contenido").addEventListener("click", async function(e)  {
+          let link = e.target.closest("a[id=vermapa]");
+          if (link) {
+            $('#mapaincidenciamodal').modal('show');
+
+            //Datos de la incidencia
+            longitud = link.getAttribute('longitud');
+            latitud = link.getAttribute('latitud');
+            label = link.getAttribute('etiqueta');
+            var posicion = new google.maps.LatLng(latitud,longitud);
+
+            var mapCentro= {
+              center:posicion,
+              zoom:10,
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"),mapCentro);
+            
+            var marker = new google.maps.Marker({
+              position: posicion,
+              label: label,
+              map: map
+            });
+            
+                      
+          }
+        }); 
+
 
     </script>
+
+
+
 
   </body>
 </html>

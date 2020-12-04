@@ -54,6 +54,18 @@
             $incidencias = IncidenciaDB::getIncidencias();
             VistaIncidencia::renderIncidencias($incidencias);
         }  
+
+        //Formulario nuevcliente
+        if ($_POST['action'] == 'nuevocliente') {
+            VistaCliente::renderFormNuevoCliente();
+        }
+
+        //Acción de insertar cliente
+        if ($_POST['action'] == 'insertcliente') {
+            ClienteDB::newCliente($_POST);
+            $clientes = ClienteDB::getClientes();
+            VistaCliente::renderClientes($clientes);
+        }         
         
         //Acción de borrar incidencia
         if ($_POST['action'] == 'deleteincidencia') {
@@ -67,7 +79,15 @@
             ClienteDB::deleteCliente($_POST['id']);
             $clientes = ClienteDB::getClientes();
             VistaCliente::renderClientes($clientes);
-        }         
+        } 
+        
+        //Acción de modificar incidencia
+        if ($_POST['action'] == 'updateincidencia') {
+            IncidenciaDB::updateIncidencia($_POST['estado'],$_POST['id']);
+            $incidencias = IncidenciaDB::getIncidencias();
+            VistaIncidencia::renderIncidencias($incidencias);
+        } 
+               
 
     }
 
