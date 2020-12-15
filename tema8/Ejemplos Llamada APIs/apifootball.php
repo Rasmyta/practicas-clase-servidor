@@ -25,6 +25,8 @@
         echo $equipo->team->name." - ".$equipo->points."<br>";
     }
 
+    
+
 
 
 ?>
