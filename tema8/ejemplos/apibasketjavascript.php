@@ -10,18 +10,18 @@
 
 
 <script>
-fetch("https://v1.basketball.api-sports.io/leagues", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "v1.basketball.api-sports.io",
-		"x-rapidapi-key": "fbb2492c4e5cb243ee897046da86eca6"
-	}
+fetch("https://cors-anywhere.herokuapp.com/https://v1.basketball.api-sports.io/leagues", {
+    "method": "GET",
+    "headers": {
+        "x-rapidapi-host": "v1.basketball.api-sports.io",
+        "x-rapidapi-key": "fbb2492c4e5cb243ee897046da86eca6	"
+    }
 })
 .then(response => {
-	console.log(response);
+    console.log(response);
 })
 .catch(err => {
-	console.log(err);
+    console.log(err);
 });
 </script>
 

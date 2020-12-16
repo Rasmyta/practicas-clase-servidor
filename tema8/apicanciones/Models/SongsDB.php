@@ -129,7 +129,10 @@ class SongsDB {
                 [
                     'sort' => ['id' => -1],
                 ]);
-            $max = $song['id'] + 1;
+            if (isset($song['id']))
+                $max = $song['id'] + 1;
+            else 
+                $max = 1;
 
             $result = $conexion->Songs->insertOne([
                 'id' => $max,

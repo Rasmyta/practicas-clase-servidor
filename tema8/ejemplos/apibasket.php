@@ -1,7 +1,7 @@
 <?php
     
-	//header('X-Auth-Token:7c112489898843e6b4949f49284587ed');
-    $uri = 'https://v1.basketball.api-sports.io/leagues';
+	header("Access-Control-Allow-Origin: http://localhost");
+    $uri = 'https://cors-anywhere.herokuapp.com/https://v1.basketball.api-sports.io/leagues';
     $reqPrefs['http']['method'] = 'GET';
     $reqPrefs['http']['header'] = array(
         'x-rapidapi-host' => 'v1.basketball.api-sports.io',
