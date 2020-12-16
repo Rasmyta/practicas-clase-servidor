@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>CERVEZAS</title>
+</head>
+<body>
+    
+    <section class='container'>
+        <h1>Cerveza</h1>
+        <form class="form-inline">
+            <div class="form-group">
+              <label>Cerveza</label>
+              <input type="text" class="form-control form-control-sm" id="cerveza" placeholder="Cerveza">
+            </div>
+            <button type="submit" class="btn btn-primary" id='enviar'>Enviar</button>
+          </form>
+
+          <div id='global'></div>
+
+    </section>
+
+
+
+<script>
+
+document.getElementById('enviar').addEventListener("click",  async function(e) {
+    e.preventDefault();
+    //var city=document.getElementById('ciudad').value;
+    var url="https://sandbox-api.brewerydb.com/v2/beers?key=a1dc1446191ebea66072bac6e03a13f6";
+    
+    let res = await fetch(url, {
+    "method": "GET",
+    "headers": {
+        "Access-Control-Allow-Origin": "http://localhost"
+    }});
+    
+    let data = await res.json();
+    console.log(data);
+/*
+    var global=document.getElementById('global');
+    global.innerHTML = data.main.temp + "<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'>";
+    
+*/
+});   
+
+</script>
+
+</body>
+</html>
