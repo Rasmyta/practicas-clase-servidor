@@ -27,9 +27,9 @@
     echo "<a href='apicervezas.php?p=$adelante'>Adelante</a><br>";
 
 
-    $uri = 'https://sandbox-api.brewerydb.com/v2/beers?p='.$pag.'&key=a1dc1446191ebea66072bac6e03a13f6';
+    $uri = 'https://sandbox-api.brewerydb.com/v2/beers?p='.$pag.'&key=';
     $reqPrefs['http']['method'] = 'GET';
-    $reqPrefs['http']['header'] = 'X-Auth-Token: a1dc1446191ebea66072bac6e03a13f6';
+    $reqPrefs['http']['header'] = 'X-Auth-Token: ';
     $stream_context = stream_context_create($reqPrefs);
     $response = file_get_contents($uri, false, $stream_context);
     //Decodificamos el json que recibimos y lo convertimos a objeto
