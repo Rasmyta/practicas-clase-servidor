@@ -21,7 +21,7 @@ class SongsDB {
     public static function getOne($id) {
         try {
             $conexion = ConexionDB::conectar("Songs");
-            $song = $conexion->Songs->findOne(array('id' => intval($id)));
+            $song = $conexion->Songs->findOne(['id' => intval($id)]);
             $result = json_encode($song);
         } catch(Exception $e) {
             echo 'Error: ' . $e->getMessage();
