@@ -10,10 +10,11 @@
     
     <section class='container'>
         <h1>Cerveza</h1>
-        <form class="form-inline">
+        <form class="form-inline" id='birras'>
             <div class="form-group">
               <label>Cerveza</label>
-              <input type="text" class="form-control form-control-sm" id="cerveza" placeholder="Cerveza">
+              <input type="text" class="form-control form-control-sm" id="name" placeholder="Cerveza">
+              <input type="hidden" name="styleId" value="1">
             </div>
             <button type="submit" class="btn btn-primary" id='enviar'>Enviar</button>
           </form>
@@ -26,24 +27,38 @@
 
 <script>
 
-document.getElementById('enviar').addEventListener("click",  async function(e) {
+document.getElementById('birras').addEventListener("submit",  async function(e) {
     e.preventDefault();
-    //var city=document.getElementById('ciudad').value;
-    var url="https://sandbox-api.brewerydb.com/v2/beers?key=a1dc1446191ebea66072bac6e03a13f6";
+    var cerveza=document.getElementById('name').value;
+    var url="https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beers?key=a1dc1446191ebea66072bac6e03a13f6&name="+cerveza;
     
+ /*   
     let res = await fetch(url, {
-    "method": "GET",
-    "headers": {
-        "Access-Control-Allow-Origin": "http://localhost"
-    }});
-    
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    });
+ */   
+    let formData = new FormData(e.target);
+		
+    let res = await fetch(url);
     let data = await res.json();
     console.log(data);
-/*
+
     var global=document.getElementById('global');
-    global.innerHTML = data.main.temp + "<img src='http://openweathermap.org/img/w/"+data.weather[0].icon+".png'>";
+    var content="";
+    for (let step = 0; step < data.data.length; step++) {
+        content += data.data[step].nameDisplay + ", ";
+    }
+    global.innerHTML = content;
     
-*/
+
 });   
 
 </script>
