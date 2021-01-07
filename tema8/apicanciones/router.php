@@ -24,9 +24,7 @@
         //Sacamos todas las canciones
         if(empty($action)){
             $controller->handle_base($method);
-        } else {
-            
-        }
+        } 
 
         switch ($action) {
             case "toprated":  
