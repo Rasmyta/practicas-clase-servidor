@@ -49,7 +49,7 @@
          * Vote_for_song: la url lleva "vote", espera un id de la canción por la que se vota
          */
         public function vote_for_song($method,$id,$vote) {
-            if ($method == "GET") {
+            if ($method == "PUT") {
                 header("Content-Type: application/json; charset=UTF-8");
                 echo SongsDB::voteForSong($id,$vote);
             } else {

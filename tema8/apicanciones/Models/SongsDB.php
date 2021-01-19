@@ -3,6 +3,7 @@
 namespace Songs;
 use MongoDB\Client;
 use Songs\ConexionDB;
+use Songs\Message;
 
 class SongsDB {
 
@@ -12,7 +13,7 @@ class SongsDB {
             $cursor = $conexion->Songs->find();
             $result = json_encode($cursor->toArray());
         } catch(Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
         }
         $conexion = null;
         return $result;
@@ -21,10 +22,14 @@ class SongsDB {
     public static function getOne($id) {
         try {
             $conexion = ConexionDB::conectar("Songs");
-            $song = $conexion->Songs->findOne(array('id' => intval($id)));
-            $result = json_encode($song);
+            $song = $conexion->Songs->findOne(['id' => intval($id)]);
+            if ($song == null) {
+                $result = self::json_message("Resource error",false,3);
+            } else { 
+                $result = json_encode($song);
+            }            
         } catch(Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
         }            
         $conexion = null;
         return $result;
@@ -36,7 +41,7 @@ class SongsDB {
             $cursor = $conexion->Songs->find(array('genre' => $genre));
             $result = json_encode($cursor->toArray());
         } catch(Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
         }
         $conexion = null;
         return $result;
@@ -53,7 +58,7 @@ class SongsDB {
                 ]);
             $result = json_encode($cursor->toArray());
         } catch(Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
         }
         $conexion = null;
         return $result;
@@ -64,14 +69,9 @@ class SongsDB {
             $conexion = ConexionDB::conectar("Songs");
             $cursor = $conexion->Songs->deleteOne(array('id' => intval($id)));  
             
-            error_reporting(0); //Que no salga el warning de crear un objeto no inicializado
-            $result->status_message = "Deleted ".$cursor->getDeletedCount()." document(s)\n"; 
-            $result->success = true;
-            $result->status_code = 1;
-            $result = json_encode($result);
-        
+            $result = self::json_message("Deleted ".$cursor->getDeletedCount()." document(s)\n",true,1);        
         } catch(Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
         }
         $conexion = null;
         return $result;
@@ -90,7 +90,7 @@ class SongsDB {
             $new_average = (($vote_count * $vote_average) + $vote) / ($vote_count + 1);
             $vote_count++; //Incrementamos en uno el número de votos
 
-            $cursor = $conexion->Songs->$cursor = $conexion->Songs->updateOne(
+            $cursor = $conexion->Songs->updateOne(
                 ['id' => intval($id)],
                 ['$set' =>  [
                             'vote_count' => $vote_count,
@@ -99,15 +99,9 @@ class SongsDB {
                 ]
             );
             
-            
-            error_reporting(0); //Que no salga el warning de crear un objeto no inicializado
-            $result->status_message = "Updated 1 document \n"; 
-            $result->success = true;
-            $result->status_code = 1;
-            $result = json_encode($result);
-        
+            $result = self::json_message("Updated 1 document\n",true,1);        
         } catch(Exception $e) {
-            $result = 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
         }
         $conexion = null;
         return $result;
@@ -147,14 +141,9 @@ class SongsDB {
                 'duration' => $put_json["duration"]
             ]);
 
-            //error_reporting(0); //Que no salga el warning de crear un objeto no inicializado
-            $result->status_message = "Created 1 document \n"; 
-            $result->success = true;
-            $result->status_code = 1;
-            $result = json_encode($result);
-
+            $result = self::json_message("Created 1 document\n",true,1);
           } catch(Exception $e) {
-            $result = 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
           }
           $conexion = null;
           return $result;
