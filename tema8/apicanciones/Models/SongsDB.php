@@ -178,17 +178,24 @@ class SongsDB {
                 'duration' => $_POST["duration"]
             ]);
 
-            //error_reporting(0); //Que no salga el warning de crear un objeto no inicializado
-            $result->status_message = "Created 1 document \n"; 
-            $result->success = true;
-            $result->status_code = 1;
-            $result = json_encode($result);
+            // //Que no salga el warning de crear un objeto no inicializado
+            $result = self::json_message("Created 1 document\n",true,1);
 
           } catch(Exception $e) {
-            $result = 'Error: ' . $e->getMessage();
+            $result = self::json_message("Database error",false,2);
           }
           $conexion = null;
           return $result;
+    }
+
+    public static function json_message($message, $success, $status) {
+        error_reporting(0);
+        $result->status_message = $message; 
+        $result->success = $success;
+        $result->status_code = $status;
+        $result = json_encode($result);
+
+        return $result;
     }
 
 }
