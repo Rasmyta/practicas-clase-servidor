@@ -24,6 +24,9 @@
                 case 'PUT':
                     $this->create_song();
                     break;
+                case 'POST':
+                    $this->create_song_post();
+                    break;
                 case 'GET':
                     $this->display_songs();  
                     break;         
@@ -99,6 +102,14 @@
         public function create_song() {
             header("Content-Type: application/json; charset=UTF-8");
             echo SongsDB::newSong(); 
+        }
+
+        /**
+         * Create_song_post: crea una nueva canción por POST, requiere request
+         */
+        public function create_song_post() {
+            header("Content-Type: application/json; charset=UTF-8");
+            echo SongsDB::newSongPOST(); 
         }
 
         /**

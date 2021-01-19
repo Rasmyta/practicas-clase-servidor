@@ -160,6 +160,47 @@ class SongsDB {
           return $result;
     }
 
+    public static function newSongPOST() {
+
+        try {
+            $conexion = ConexionDB::conectar("Songs");
+    
+            //Primero sacamos el máximo id
+            $song = $conexion->Songs->findOne(
+                [],
+                [
+                    'sort' => ['id' => -1],
+                ]);
+            if (isset($song['id']))
+                $max = $song['id'] + 1;
+            else 
+                $max = 1;
+
+            $result = $conexion->Songs->insertOne([
+                'id' => $max,
+                'title' => $_POST["title"],
+                'author' => $_POST["author"],
+                'release_date' => $_POST["release_date"],
+                'vote_average' => 0,
+                'vote_count' => 0,
+                'original_language' => $_POST["original_language"],
+                'genre' => $_POST["genre"],
+                'album' => $_POST["album"],
+                'duration' => $_POST["duration"]
+            ]);
+
+            //error_reporting(0); //Que no salga el warning de crear un objeto no inicializado
+            $result->status_message = "Created 1 document \n"; 
+            $result->success = true;
+            $result->status_code = 1;
+            $result = json_encode($result);
+
+          } catch(Exception $e) {
+            $result = 'Error: ' . $e->getMessage();
+          }
+          $conexion = null;
+          return $result;
+    }
 
 }
 

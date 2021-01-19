@@ -1,0 +1,18 @@
+[
+{
+    "id": 1,
+    "nombre": "Javier Guillén",
+    "direccion": "Calle Mi casa 2",
+    "localidad": "Mojacar",
+    "movil": "656270889",
+    "dni": "45251698G"
+},
+{
+    "id": 2,
+    "nombre": "Luisa Sánchez",
+    "direccion": "Avenida Bacalao 2",
+    "localidad": "Antas",
+    "movil": "696332225",
+    "dni": "45412266T"
+}
+]
